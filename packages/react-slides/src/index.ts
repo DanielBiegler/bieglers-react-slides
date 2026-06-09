@@ -1,0 +1,5 @@
+export { Deck } from "./components/Deck/Deck"
+export { Slide } from "./components/Slide/index"
+export { Code } from "./components/Code/Code"
+export { Notes } from "./components/Notes/Notes"
+export { Image } from "./components/Image/Image"

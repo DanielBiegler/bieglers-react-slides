@@ -1,0 +1,38 @@
+.root {
+  width: 100%;
+  background: #111;
+  border-radius: var(--rs-radius);
+  overflow: hidden;
+  text-align: left;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid #222;
+}
+
+.language {
+  font-size: var(--rs-font-size-small);
+  color: var(--rs-color-muted);
+  font-family: var(--rs-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pre {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-family: var(--rs-font-mono);
+  font-size: var(--rs-font-size-small);
+  line-height: 1.7;
+  color: var(--rs-color);
+}
+
+.pre code {
+  font-family: inherit;
+}

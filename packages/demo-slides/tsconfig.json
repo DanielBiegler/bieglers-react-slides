@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@danielbiegler/react-slides": ["../react-slides/src/index.ts"]
+    }
+  },
+  "include": ["src", "../../css.d.ts", "../react-slides/src"]
+}

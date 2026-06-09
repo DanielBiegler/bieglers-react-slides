@@ -1,0 +1,30 @@
+.root {
+  width: 100vw;
+  height: 100vh;
+  background: var(--rs-bg);
+  color: var(--rs-color);
+  font-family: var(--rs-font-sans);
+  font-size: var(--rs-font-size-base);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide {
+  width: var(--rs-slide-width);
+  height: var(--rs-slide-height);
+  max-width: 100vw;
+  max-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress {
+  position: fixed;
+  bottom: 1rem;
+  right: 1.5rem;
+  font-size: var(--rs-font-size-small);
+  color: var(--rs-color-muted);
+  font-family: var(--rs-font-mono);
+}

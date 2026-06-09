@@ -1,0 +1,34 @@
+.root {
+  width: 100%;
+  height: 100%;
+  padding: var(--rs-slide-padding);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--rs-bg);
+  text-align: center;
+}
+
+.root h1 { font-size: var(--rs-font-size-h1); font-weight: 700; margin: 0 0 0.5em; line-height: 1.15; }
+.root h2 { font-size: var(--rs-font-size-h2); font-weight: 600; margin: 0 0 0.5em; line-height: 1.2; }
+.root h3 { font-size: var(--rs-font-size-h3); font-weight: 600; margin: 0 0 0.5em; }
+.root p  { font-size: var(--rs-font-size-base); line-height: 1.7; margin: 0 0 0.75em; max-width: 70ch; }
+.root ul, .root ol { text-align: left; font-size: var(--rs-font-size-base); line-height: 2; padding-left: 1.5em; margin: 0; }
+.root blockquote {
+  font-size: var(--rs-font-size-h2);
+  font-style: italic;
+  border-left: 4px solid var(--rs-accent);
+  padding-left: 1.5rem;
+  margin: 0;
+  text-align: left;
+  line-height: 1.4;
+}
+.root blockquote cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: var(--rs-font-size-base);
+  font-style: normal;
+  color: var(--rs-color-muted);
+}
