@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useRef, Children, ReactElement } from "react"
+import { Children, ReactElement, useCallback, useEffect, useRef } from "react"
 import {
   HashRouter,
-  Routes,
-  Route,
   Navigate,
+  Route,
+  Routes,
   useNavigate,
   useParams,
 } from "react-router"
 import { NotesContext } from "../../context/NotesContext"
-import { SpeakerView } from "./SpeakerView"
-import styles from "./Deck.module.css"
 import "../../styles/tokens.css"
+import styles from "./Deck.module.css"
+import { SpeakerView } from "./SpeakerView"
 
 interface DeckProps {
   title: string

@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -20,7 +22,7 @@ html, body {
   --rs-color: #f0f0f0;
   --rs-color-muted: #888;
   --rs-accent: #7c6af7;
-  --rs-font-sans: system-ui, -apple-system, sans-serif;
+  --rs-font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
   --rs-font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   --rs-font-size-base: clamp(1rem, 2.5vw, 1.5rem);
   --rs-font-size-h1: clamp(2rem, 6vw, 5rem);

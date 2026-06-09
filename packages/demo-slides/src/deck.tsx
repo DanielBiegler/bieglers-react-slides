@@ -1,4 +1,4 @@
-import { Deck, Slide, Code, Notes, Image } from "@danielbiegler/react-slides"
+import { Code, Deck, Image, Notes, Slide } from "@danielbiegler/react-slides"
 
 export default (
   <Deck title="react-slides demo" theme="dark">
