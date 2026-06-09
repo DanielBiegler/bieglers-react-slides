@@ -39,9 +39,7 @@ html, body {
   --rs-font-weight-body:    400;
   --rs-font-weight-heading: 800;
 
-  --rs-slide-width:   1280px;
-  --rs-slide-height:  720px;
-  --rs-slide-padding: clamp(2rem, 5vw, 4rem);
+  --rs-slide-padding: 4rem;
   --rs-radius:        0.5rem;
   --rs-gap:           2rem;
 }

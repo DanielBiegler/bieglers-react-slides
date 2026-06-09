@@ -40,21 +40,19 @@ export default (
     <Slide.Split
       left={
         <>
-          <h2>Split layout</h2>
-          <ul>
-            <li>Text on the left</li>
-            <li>Full-bleed image on the right</li>
-            <li>50 / 50 by default</li>
-          </ul>
+          <h2>Regular split</h2>
+          <p>Both panes share the same padding. Good for text, lists, or small visuals.</p>
         </>
       }
       right={
-        <img
-          src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800"
-          alt="Technology"
-        />
+        <>
+          <h3>Right pane</h3>
+          <ul>
+            <li>Equal padding on both sides</li>
+            <li>Content stays inset</li>
+          </ul>
+        </>
       }
-      mediaPane="right"
     />
 
     <Slide.Split
@@ -67,7 +65,7 @@ export default (
       right={
         <>
           <h2>Full-bleed image</h2>
-          <p>Set <code>mediaPane="left"</code> or <code>"right"</code> to let an image fill its half edge-to-edge — no padding, no border radius.</p>
+          <p>The image fills its half edge-to-edge with <code>object-fit: cover</code>.</p>
         </>
       }
       mediaPane="left"
