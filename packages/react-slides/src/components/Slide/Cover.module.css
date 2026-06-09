@@ -12,17 +12,18 @@
 
 .title {
   font-size: var(--rs-font-size-h1);
-  font-weight: 700;
-  line-height: 1.1;
+  font-weight: var(--rs-font-weight-heading);
+  line-height: 1.05;
   color: var(--rs-color);
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
   font-size: var(--rs-font-size-h3);
   color: var(--rs-color-muted);
   margin: 0;
-  font-weight: 400;
+  font-weight: var(--rs-font-weight-body);
 }
 
 .meta {

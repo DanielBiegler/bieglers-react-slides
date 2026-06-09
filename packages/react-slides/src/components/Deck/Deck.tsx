@@ -14,7 +14,7 @@ import { SpeakerView } from "./SpeakerView"
 
 interface DeckProps {
   title: string
-  theme?: "dark" | "light"
+  theme?: "auto" | "dark" | "light"
   children: ReactElement | ReactElement[]
 }
 
@@ -82,7 +82,7 @@ function SlideShell({
   )
 }
 
-function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: string }) {
+function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: "auto" | "dark" | "light" }) {
   const total = slides.length
   const notesRef = useRef("")
   const setNotes = useCallback((notes: string) => {
@@ -91,7 +91,7 @@ function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: string }
 
   return (
     <NotesContext value={setNotes}>
-      <div className={styles.root} data-theme={theme}>
+      <div className={styles.root} data-theme={theme === "auto" ? undefined : theme}>
         <Routes>
           <Route path="/" element={<Navigate to="/1" replace />} />
           <Route
@@ -105,7 +105,7 @@ function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: string }
   )
 }
 
-export function Deck({ title: _title, theme = "dark", children }: DeckProps) {
+export function Deck({ title: _title, theme = "auto", children }: DeckProps) {
   const slides = Children.toArray(children) as ReactElement[]
   return (
     <HashRouter>

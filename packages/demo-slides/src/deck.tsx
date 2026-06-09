@@ -43,18 +43,34 @@ export default (
           <h2>Split layout</h2>
           <ul>
             <li>Text on the left</li>
-            <li>Anything on the right</li>
+            <li>Full-bleed image on the right</li>
             <li>50 / 50 by default</li>
           </ul>
         </>
       }
       right={
-        <Image
+        <img
           src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800"
           alt="Technology"
-          fit="cover"
         />
       }
+      mediaPane="right"
+    />
+
+    <Slide.Split
+      left={
+        <img
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+          alt="Mountain landscape"
+        />
+      }
+      right={
+        <>
+          <h2>Full-bleed image</h2>
+          <p>Set <code>mediaPane="left"</code> or <code>"right"</code> to let an image fill its half edge-to-edge — no padding, no border radius.</p>
+        </>
+      }
+      mediaPane="left"
     />
 
     <Slide.Centered>

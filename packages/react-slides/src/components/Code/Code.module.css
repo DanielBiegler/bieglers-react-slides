@@ -1,6 +1,6 @@
 .root {
   width: 100%;
-  background: #111;
+  background: var(--rs-surface);
   border-radius: var(--rs-radius);
   overflow: hidden;
   text-align: left;
@@ -11,8 +11,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  background: #1a1a1a;
-  border-bottom: 1px solid #222;
+  background: var(--rs-surface-header);
+  border-bottom: 1px solid var(--rs-border);
 }
 
 .language {
@@ -28,7 +28,7 @@
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
   font-family: var(--rs-font-mono);
-  font-size: var(--rs-font-size-small);
+  font-size: var(--rs-font-size-base);
   line-height: 1.7;
   color: var(--rs-color);
 }
