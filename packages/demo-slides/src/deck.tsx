@@ -14,6 +14,30 @@ export default (
       }
     />
 
+    <Slide.CoverCentered
+      title="react-slides"
+      subtitle="Portable presentations with React"
+      icon={
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+          <path d="M9 10l2 2 4-4" />
+        </svg>
+      }
+    />
+
+    <Slide.CoverSplit
+      title="react-slides"
+      subtitle="Portable presentations with React"
+      icon={
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+          <path d="M9 10l2 2 4-4" />
+        </svg>
+      }
+    />
+
     <Slide.Centered>
       <h2>Simple by default</h2>
       <p>Three layouts. Native HTML. CSS custom properties.</p>
