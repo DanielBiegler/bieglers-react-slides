@@ -38,6 +38,36 @@ export default (
       }
     />
 
+    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-plus-jakarta)" } as React.CSSProperties}>
+      <Slide.Centered>
+        <h2>Plus Jakarta Sans</h2>
+        <p>The quick brown fox jumps over the lazy dog.</p>
+        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+          --rs-font-sans: var(--rs-font-plus-jakarta)
+        </p>
+      </Slide.Centered>
+    </div>
+
+    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-bricolage-grotesque)" } as React.CSSProperties}>
+      <Slide.Centered>
+        <h2>Bricolage Grotesque</h2>
+        <p>The quick brown fox jumps over the lazy dog.</p>
+        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+          --rs-font-sans: var(--rs-font-bricolage-grotesque)
+        </p>
+      </Slide.Centered>
+    </div>
+
+    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-unbounded)" } as React.CSSProperties}>
+      <Slide.Centered>
+        <h2>Unbounded</h2>
+        <p>The quick brown fox jumps over the lazy dog.</p>
+        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+          --rs-font-sans: var(--rs-font-unbounded)
+        </p>
+      </Slide.Centered>
+    </div>
+
     <Slide.Centered>
       <h2>Simple by default</h2>
       <p>Three layouts. Native HTML. CSS custom properties.</p>
@@ -56,10 +86,12 @@ export default (
       <h2>Authoring a slide</h2>
       <Code
         language="tsx"
+        highlight="3,5"
         code={`
 <Slide.Centered>
   <h2>Hello world</h2>
   <p>Just write HTML inside a layout.</p>
+  <Code language="tsx" highlight="2-4" code={snippet} />
   <Notes>Only you can see this.</Notes>
 </Slide.Centered>
         `}

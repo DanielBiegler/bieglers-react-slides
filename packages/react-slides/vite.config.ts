@@ -11,7 +11,13 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react-router", "react/jsx-runtime"],
+      external: [
+        "react",
+        "react-dom",
+        "react-router",
+        "react/jsx-runtime",
+        "prism-react-renderer",
+      ],
     },
   },
 })

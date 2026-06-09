@@ -9,6 +9,7 @@
   justify-content: center;
   background: var(--rs-bg);
   text-align: center;
+  font-family: var(--rs-font-sans);
 }
 
 .root h1 { font-size: 9rem;   font-weight: var(--rs-font-weight-heading); margin: 0 0 0.4em; line-height: 1;    letter-spacing: -0.03em; }

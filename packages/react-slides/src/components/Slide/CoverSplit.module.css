@@ -5,6 +5,7 @@
   grid-template-columns: 2fr 3fr;
   background: var(--rs-bg);
   overflow: hidden;
+  font-family: var(--rs-font-sans);
 }
 
 .panel {

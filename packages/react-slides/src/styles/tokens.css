@@ -27,7 +27,23 @@ html, body {
   --rs-surface-header: #222230;
   --rs-border:         #2a2a38;
 
-  --rs-font-sans: "Inter Variable", system-ui, -apple-system, sans-serif;
+  /* syntax highlighting (dark) */
+  --rs-syntax-comment:     #6b7280;
+  --rs-syntax-punctuation: #abb2bf;
+  --rs-syntax-keyword:     #c678dd;
+  --rs-syntax-string:      #98c379;
+  --rs-syntax-function:    #61afef;
+  --rs-syntax-number:      #d19a66;
+  --rs-syntax-tag:         #e06c75;
+  --rs-syntax-variable:    #e5c07b;
+
+  /* named font stacks — assign one to --rs-font-sans to switch */
+  --rs-font-inter:              "Inter Variable", system-ui, -apple-system, sans-serif;
+  --rs-font-plus-jakarta:       "Plus Jakarta Sans Variable", system-ui, -apple-system, sans-serif;
+  --rs-font-bricolage-grotesque: "Bricolage Grotesque Variable", system-ui, -apple-system, sans-serif;
+  --rs-font-unbounded:          "Unbounded Variable", system-ui, -apple-system, sans-serif;
+
+  --rs-font-sans: var(--rs-font-inter);
   --rs-font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 
   --rs-font-size-base:  1.5rem;
@@ -54,6 +70,15 @@ html, body {
     --rs-surface:        #e8e8f0;
     --rs-surface-header: #dcdce8;
     --rs-border:         #cecede;
+
+    --rs-syntax-comment:     #a0a1a7;
+    --rs-syntax-punctuation: #383a42;
+    --rs-syntax-keyword:     #a626a4;
+    --rs-syntax-string:      #50a14f;
+    --rs-syntax-function:    #4078f2;
+    --rs-syntax-number:      #986801;
+    --rs-syntax-tag:         #e45649;
+    --rs-syntax-variable:    #c18401;
   }
 }
 
@@ -66,6 +91,15 @@ html, body {
   --rs-surface:        #1a1a22;
   --rs-surface-header: #222230;
   --rs-border:         #2a2a38;
+
+  --rs-syntax-comment:     #6b7280;
+  --rs-syntax-punctuation: #abb2bf;
+  --rs-syntax-keyword:     #c678dd;
+  --rs-syntax-string:      #98c379;
+  --rs-syntax-function:    #61afef;
+  --rs-syntax-number:      #d19a66;
+  --rs-syntax-tag:         #e06c75;
+  --rs-syntax-variable:    #e5c07b;
 }
 
 [data-theme="light"] {
@@ -76,4 +110,13 @@ html, body {
   --rs-surface:        #e8e8f0;
   --rs-surface-header: #dcdce8;
   --rs-border:         #cecede;
+
+  --rs-syntax-comment:     #a0a1a7;
+  --rs-syntax-punctuation: #383a42;
+  --rs-syntax-keyword:     #a626a4;
+  --rs-syntax-string:      #50a14f;
+  --rs-syntax-function:    #4078f2;
+  --rs-syntax-number:      #986801;
+  --rs-syntax-tag:         #e45649;
+  --rs-syntax-variable:    #c18401;
 }

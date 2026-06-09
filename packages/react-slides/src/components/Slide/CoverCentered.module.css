@@ -9,6 +9,7 @@
   justify-content: center;
   background: var(--rs-bg);
   text-align: center;
+  font-family: var(--rs-font-sans);
 }
 
 .content {
