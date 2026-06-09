@@ -4,27 +4,23 @@ import styles from "./Cover.module.css"
 interface CoverProps {
   title: string
   subtitle?: string
-  author?: string
-  date?: string
+  icon?: ReactNode
   children?: ReactNode
 }
 
-export function Cover({ title, subtitle, author, date, children }: CoverProps) {
+export function Cover({ title, subtitle, icon, children }: CoverProps) {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <div className={styles.accent} />
-        <div>
-          <h1 className={styles.title}>{title}</h1>
-          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+        {icon && <div className={styles.icon}>{icon}</div>}
+        <div className={styles.titleGroup}>
+          <div className={styles.accent} />
+          <div>
+            <h1 className={styles.title}>{title}</h1>
+            {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          </div>
         </div>
       </div>
-      {(author || date) && (
-        <div className={styles.meta}>
-          {author && <span>{author}</span>}
-          {date && <span>{date}</span>}
-        </div>
-      )}
       {children}
     </div>
   )

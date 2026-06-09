@@ -7,6 +7,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router"
+import { DeckContext } from "../../context/DeckContext"
 import { NotesContext } from "../../context/NotesContext"
 import "../../styles/tokens.css"
 import styles from "./Deck.module.css"
@@ -14,6 +15,8 @@ import { SpeakerView } from "./SpeakerView"
 
 interface DeckProps {
   title: string
+  author?: string
+  date?: string
   theme?: "auto" | "dark" | "light"
   children: ReactElement | ReactElement[]
 }
@@ -25,10 +28,16 @@ export type ChannelMessage =
   | { type: "NAV"; direction: "next" | "prev" }
 
 function SlideShell({
+  title,
+  author,
+  date,
   slides,
   total,
   notesRef,
 }: {
+  title: string
+  author?: string
+  date?: string
   slides: ReactElement[]
   total: number
   notesRef: React.RefObject<string>
@@ -73,16 +82,34 @@ function SlideShell({
   }, [slideIndex, total, navigate])
 
   return (
-    <div className={styles.slide}>
-      {slides[slideIndex]}
-      <span className={styles.progress}>
-        {slideIndex + 1} / {total}
-      </span>
-    </div>
+    <DeckContext value={{ title, author, date, total, slideIndex }}>
+      <div className={styles.slide}>
+        {slides[slideIndex]}
+        <footer className={styles.footer}>
+          <span>{title}</span>
+          <span className={styles.footerCenter}>
+            {[author, date].filter(Boolean).join(" · ")}
+          </span>
+          <span className={styles.footerRight}>{slideIndex + 1} / {total}</span>
+        </footer>
+      </div>
+    </DeckContext>
   )
 }
 
-function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: "auto" | "dark" | "light" }) {
+function DeckRouter({
+  title,
+  author,
+  date,
+  slides,
+  theme,
+}: {
+  title: string
+  author?: string
+  date?: string
+  slides: ReactElement[]
+  theme: "auto" | "dark" | "light"
+}) {
   const total = slides.length
   const notesRef = useRef("")
   const setNotes = useCallback((notes: string) => {
@@ -96,7 +123,16 @@ function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: "auto" |
           <Route path="/" element={<Navigate to="/1" replace />} />
           <Route
             path="/:index"
-            element={<SlideShell slides={slides} total={total} notesRef={notesRef} />}
+            element={
+              <SlideShell
+                title={title}
+                author={author}
+                date={date}
+                slides={slides}
+                total={total}
+                notesRef={notesRef}
+              />
+            }
           />
           <Route path="/speaker" element={<SpeakerView slides={slides} />} />
         </Routes>
@@ -105,11 +141,11 @@ function DeckRouter({ slides, theme }: { slides: ReactElement[]; theme: "auto" |
   )
 }
 
-export function Deck({ title: _title, theme = "auto", children }: DeckProps) {
+export function Deck({ title, author, date, theme = "auto", children }: DeckProps) {
   const slides = Children.toArray(children) as ReactElement[]
   return (
     <HashRouter>
-      <DeckRouter slides={slides} theme={theme} />
+      <DeckRouter title={title} author={author} date={date} slides={slides} theme={theme} />
     </HashRouter>
   )
 }

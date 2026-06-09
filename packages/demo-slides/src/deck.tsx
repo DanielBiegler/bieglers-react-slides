@@ -1,12 +1,17 @@
 import { Code, Deck, Image, Notes, Slide } from "@danielbiegler/react-slides"
 
 export default (
-  <Deck title="react-slides demo" theme="dark">
+  <Deck title="react-slides demo" author="Daniel Biegler" date="2026" theme="dark">
     <Slide.Cover
       title="react-slides"
       subtitle="Portable presentations with React"
-      author="Daniel Biegler"
-      date="2026"
+      icon={
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+          <path d="M9 10l2 2 4-4" />
+        </svg>
+      }
     />
 
     <Slide.Centered>
