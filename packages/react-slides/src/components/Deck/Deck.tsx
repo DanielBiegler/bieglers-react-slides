@@ -47,7 +47,7 @@ function exitClass(transition: Transition, direction: number): string {
 
 /** No-op passed to the outgoing SlideLayer so its step registrations don't clobber
  *  the incoming slide's count while the transition is playing. */
-const NOOP_REGISTER = () => {}
+const NOOP_REGISTER = () => { }
 
 /** Wraps one slide, providing StepsContext (for step registration) and
  *  FootnoteContext (for footnote hoisting). */
