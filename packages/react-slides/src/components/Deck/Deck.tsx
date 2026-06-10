@@ -281,7 +281,7 @@ function DeckRouter({
               />
             }
           />
-          <Route path="/speaker" element={<SpeakerView slides={slides} />} />
+          <Route path="/speaker" element={<SpeakerView slides={slides} title={title} author={author} date={date} />} />
         </Routes>
       </div>
     </NotesContext>

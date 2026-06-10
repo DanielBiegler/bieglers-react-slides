@@ -1,10 +1,14 @@
 import { ReactElement, useEffect, useRef, useState } from "react"
 import { BROADCAST_CHANNEL, ChannelMessage } from "./Deck"
+import { DeckContext } from "../../context/DeckContext"
 import styles from "./SpeakerView.module.css"
 import "../../styles/tokens.css"
 
 interface SpeakerViewProps {
   slides: ReactElement[]
+  title: string
+  author?: string
+  date?: string
 }
 
 interface SlideState {
@@ -50,9 +54,21 @@ function formatTime(s: number) {
 
 function ScaledSlide({
   slide,
+  step,
+  slideIndex,
+  total,
+  title,
+  author,
+  date,
   containerRef,
 }: {
   slide: ReactElement
+  step: number
+  slideIndex: number
+  total: number
+  title: string
+  author?: string
+  date?: string
   containerRef: React.RefObject<HTMLDivElement | null>
 }) {
   const [scale, setScale] = useState(1)
@@ -71,16 +87,18 @@ function ScaledSlide({
   }, [containerRef])
 
   return (
-    <div
-      className={styles.slideScaled}
-      style={{ width: W, height: H, transform: `scale(${scale})` }}
-    >
-      {slide}
-    </div>
+    <DeckContext value={{ title, author, date, total, slideIndex, step }}>
+      <div
+        className={styles.slideScaled}
+        style={{ width: W, height: H, transform: `scale(${scale})` }}
+      >
+        {slide}
+      </div>
+    </DeckContext>
   )
 }
 
-export function SpeakerView({ slides }: SpeakerViewProps) {
+export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
   const [state, setState] = useState<SlideState>({
     slideIndex: 0,
     total: slides.length,
@@ -91,7 +109,14 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
   const { elapsed, running, start, pause, reset } = useTimer()
   const currentRef = useRef<HTMLDivElement>(null)
   const nextRef = useRef<HTMLDivElement>(null)
+  const stepPreviewRef = useRef<HTMLDivElement>(null)
   const channelRef = useRef<BroadcastChannel | null>(null)
+
+  useEffect(() => {
+    const prev = document.title
+    document.title = `${title} — Speaker`
+    return () => { document.title = prev }
+  }, [title])
 
   useEffect(() => {
     const channel = new BroadcastChannel(BROADCAST_CHANNEL)
@@ -123,6 +148,7 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
   const { slideIndex, total, notes, step, stepCount } = state
   const current = slides[slideIndex]
   const next = slides[slideIndex + 1]
+  const showStepPreview = stepCount > 0 && step < stepCount
 
   return (
     <div className={styles.root} data-theme="dark">
@@ -135,7 +161,40 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
             )}
           </span>
           <div className={styles.slideFrame} ref={currentRef}>
-            {current && <ScaledSlide slide={current} containerRef={currentRef} />}
+            {current && (
+              <ScaledSlide
+                slide={current}
+                step={step}
+                slideIndex={slideIndex}
+                total={total}
+                title={title}
+                author={author}
+                date={date}
+                containerRef={currentRef}
+              />
+            )}
+            {showStepPreview && current && (
+              <div className={styles.stepOverlay}>
+                <span className={styles.stepOverlayLabel}>
+                  Next
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="12" height="12">
+                    <path fillRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                  </svg>
+                </span>
+                <div className={styles.stepOverlayFrame} ref={stepPreviewRef}>
+                  <ScaledSlide
+                    slide={current}
+                    step={step + 1}
+                    slideIndex={slideIndex}
+                    total={total}
+                    title={title}
+                    author={author}
+                    date={date}
+                    containerRef={stepPreviewRef}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -143,7 +202,16 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
           <span className={styles.slideLabel}>Next</span>
           <div className={`${styles.slideFrame} ${styles.slideFrameDim}`} ref={nextRef}>
             {next
-              ? <ScaledSlide slide={next} containerRef={nextRef} />
+              ? <ScaledSlide
+                  slide={next}
+                  step={0}
+                  slideIndex={slideIndex + 1}
+                  total={total}
+                  title={title}
+                  author={author}
+                  date={date}
+                  containerRef={nextRef}
+                />
               : <span className={styles.emptyNext}>End of deck</span>
             }
           </div>

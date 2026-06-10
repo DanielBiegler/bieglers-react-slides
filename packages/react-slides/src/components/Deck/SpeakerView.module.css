@@ -53,6 +53,38 @@
   opacity: 0.55;
 }
 
+.stepOverlay {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 10;
+}
+
+.stepOverlayLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.6rem;
+  color: var(--rs-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--rs-font-mono);
+}
+
+.stepOverlayFrame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--rs-radius);
+  border: 1px solid var(--rs-accent);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
 .slideScaled {
   position: absolute;
   inset: 0;
