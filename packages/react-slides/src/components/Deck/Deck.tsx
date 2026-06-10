@@ -10,7 +10,6 @@ import {
 } from "react-router"
 import { DeckContext } from "../../context/DeckContext"
 import { FootnoteContext } from "../../context/FootnoteContext"
-import { NotesContext } from "../../context/NotesContext"
 import { StepsContext } from "../../context/StepsContext"
 import "../../styles/tokens.css"
 import styles from "./Deck.module.css"
@@ -30,7 +29,7 @@ interface DeckProps {
 export const BROADCAST_CHANNEL = "react-slides"
 
 export type ChannelMessage =
-  | { type: "SLIDE_STATE"; slideIndex: number; total: number; notes: string; step: number; stepCount: number }
+  | { type: "SLIDE_STATE"; slideIndex: number; total: number; step: number; stepCount: number }
   | { type: "NAV"; direction: "next" | "prev" }
 
 /** Direction: +1 = forward (next), -1 = backward (prev). */
@@ -83,7 +82,6 @@ function SlideShell({
   transition,
   slides,
   total,
-  notesRef,
 }: {
   title: string
   author?: string
@@ -91,7 +89,6 @@ function SlideShell({
   transition: Transition
   slides: ReactElement[]
   total: number
-  notesRef: React.RefObject<string>
 }) {
   const { index } = useParams<{ index: string }>()
   const navigate = useNavigate()
@@ -185,12 +182,11 @@ function SlideShell({
       type: "SLIDE_STATE",
       slideIndex,
       total,
-      notes: notesRef.current,
       step,
       stepCount: stepCountRef.current,
     }
     channel.current?.postMessage(msg)
-  }, [slideIndex, total, notesRef, step])
+  }, [slideIndex, total, step])
 
   // Keyboard handler — registered once, reads latest callbacks via refs
   useEffect(() => {
@@ -257,34 +253,27 @@ function DeckRouter({
   transition: Transition
 }) {
   const total = slides.length
-  const notesRef = useRef("")
-  const setNotes = useCallback((notes: string) => {
-    notesRef.current = notes
-  }, [])
 
   return (
-    <NotesContext value={setNotes}>
-      <div className={styles.root} data-theme={theme === "auto" ? undefined : theme}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/1" replace />} />
-          <Route
-            path="/:index"
-            element={
-              <SlideShell
-                title={title}
-                author={author}
-                date={date}
-                transition={transition}
-                slides={slides}
-                total={total}
-                notesRef={notesRef}
-              />
-            }
-          />
-          <Route path="/speaker" element={<SpeakerView slides={slides} title={title} author={author} date={date} />} />
-        </Routes>
-      </div>
-    </NotesContext>
+    <div className={styles.root} data-theme={theme === "auto" ? undefined : theme}>
+      <Routes>
+        <Route path="/" element={<Navigate to="/1" replace />} />
+        <Route
+          path="/:index"
+          element={
+            <SlideShell
+              title={title}
+              author={author}
+              date={date}
+              transition={transition}
+              slides={slides}
+              total={total}
+            />
+          }
+        />
+        <Route path="/speaker" element={<SpeakerView slides={slides} title={title} author={author} date={date} />} />
+      </Routes>
+    </div>
   )
 }
 

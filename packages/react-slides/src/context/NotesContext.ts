@@ -1,3 +1,3 @@
-import { createContext } from "react"
+import { createContext, ReactNode } from "react"
 
-export const NotesContext = createContext<(notes: string) => void>(() => {})
+export const NotesContext = createContext<(notes: ReactNode) => void>(() => {})

@@ -1,8 +1,11 @@
-import { ReactElement, useEffect, useRef, useState } from "react"
+import { ReactElement, ReactNode, useEffect, useRef, useState } from "react"
 import { BROADCAST_CHANNEL, ChannelMessage } from "./Deck"
 import { DeckContext } from "../../context/DeckContext"
+import { NotesContext } from "../../context/NotesContext"
 import styles from "./SpeakerView.module.css"
 import "../../styles/tokens.css"
+
+const NOOP_SET_NOTES = () => {}
 
 interface SpeakerViewProps {
   slides: ReactElement[]
@@ -14,7 +17,6 @@ interface SpeakerViewProps {
 interface SlideState {
   slideIndex: number
   total: number
-  notes: string
   step: number
   stepCount: number
 }
@@ -102,10 +104,10 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
   const [state, setState] = useState<SlideState>({
     slideIndex: 0,
     total: slides.length,
-    notes: "",
     step: 0,
     stepCount: 0,
   })
+  const [notesNode, setNotesNode] = useState<ReactNode>(null)
   const { elapsed, running, start, pause, reset } = useTimer()
   const currentRef = useRef<HTMLDivElement>(null)
   const nextRef = useRef<HTMLDivElement>(null)
@@ -145,14 +147,14 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
     channelRef.current?.postMessage({ type: "NAV", direction } satisfies ChannelMessage)
   }
 
-  const { slideIndex, total, notes, step, stepCount } = state
+  const { slideIndex, total, step, stepCount } = state
   const current = slides[slideIndex]
   const next = slides[slideIndex + 1]
   const showStepPreview = stepCount > 0 && step < stepCount
 
   return (
     <div className={styles.root} data-theme="dark">
-      <div className={styles.slides}>
+      <div className={styles.leftCol}>
         <div className={styles.slideCol}>
           <span className={styles.slideLabel}>
             Current — {slideIndex + 1} / {total}
@@ -162,16 +164,19 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
           </span>
           <div className={styles.slideFrame} ref={currentRef}>
             {current && (
-              <ScaledSlide
-                slide={current}
-                step={step}
-                slideIndex={slideIndex}
-                total={total}
-                title={title}
-                author={author}
-                date={date}
-                containerRef={currentRef}
-              />
+              <NotesContext value={setNotesNode}>
+                <ScaledSlide
+                  key={slideIndex}
+                  slide={current}
+                  step={step}
+                  slideIndex={slideIndex}
+                  total={total}
+                  title={title}
+                  author={author}
+                  date={date}
+                  containerRef={currentRef}
+                />
+              </NotesContext>
             )}
             {showStepPreview && current && (
               <div className={styles.stepOverlay}>
@@ -182,16 +187,18 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
                   </svg>
                 </span>
                 <div className={styles.stepOverlayFrame} ref={stepPreviewRef}>
-                  <ScaledSlide
-                    slide={current}
-                    step={step + 1}
-                    slideIndex={slideIndex}
-                    total={total}
-                    title={title}
-                    author={author}
-                    date={date}
-                    containerRef={stepPreviewRef}
-                  />
+                  <NotesContext value={NOOP_SET_NOTES}>
+                    <ScaledSlide
+                      slide={current}
+                      step={step + 1}
+                      slideIndex={slideIndex}
+                      total={total}
+                      title={title}
+                      author={author}
+                      date={date}
+                      containerRef={stepPreviewRef}
+                    />
+                  </NotesContext>
                 </div>
               </div>
             )}
@@ -202,18 +209,51 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
           <span className={styles.slideLabel}>Next</span>
           <div className={`${styles.slideFrame} ${styles.slideFrameDim}`} ref={nextRef}>
             {next
-              ? <ScaledSlide
-                  slide={next}
-                  step={0}
-                  slideIndex={slideIndex + 1}
-                  total={total}
-                  title={title}
-                  author={author}
-                  date={date}
-                  containerRef={nextRef}
-                />
+              ? <NotesContext value={NOOP_SET_NOTES}>
+                  <ScaledSlide
+                    slide={next}
+                    step={0}
+                    slideIndex={slideIndex + 1}
+                    total={total}
+                    title={title}
+                    author={author}
+                    date={date}
+                    containerRef={nextRef}
+                  />
+                </NotesContext>
               : <span className={styles.emptyNext}>End of deck</span>
             }
+          </div>
+        </div>
+
+        <div className={styles.footer}>
+          <span className={styles.timer}>
+            <span
+              className={styles.timerDot}
+              data-state={running ? "running" : elapsed > 0 ? "paused" : "idle"}
+            />
+            {formatTime(elapsed)}
+          </span>
+          <div className={styles.controls}>
+            <button className={styles.btn} onClick={() => nav("prev")} aria-label="Previous">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
+              </svg>
+              Prev
+            </button>
+            <button className={styles.btn} onClick={() => nav("next")} aria-label="Next">
+              Next
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                <path fillRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          <div className={styles.controls}>
+            {running
+              ? <button className={styles.btn} onClick={pause}>Pause</button>
+              : <button className={styles.btn} onClick={start}>Start</button>
+            }
+            <button className={styles.btn} onClick={reset}>Reset</button>
           </div>
         </div>
       </div>
@@ -221,37 +261,7 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
       <div className={styles.notes}>
         <span className={styles.notesLabel}>Notes</span>
         <div className={styles.notesContent}>
-          {notes
-            ? notes
-            : <span className={styles.notesEmpty}>No notes for this slide.</span>
-          }
-        </div>
-      </div>
-
-      <div className={styles.footer}>
-        <span className={styles.timer}>
-          {formatTime(elapsed)}
-        </span>
-        <div className={styles.controls}>
-          <button className={styles.btn} onClick={() => nav("prev")} aria-label="Previous">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
-              <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
-            </svg>
-            Prev
-          </button>
-          <button className={styles.btn} onClick={() => nav("next")} aria-label="Next">
-            Next
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
-              <path fillRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
-            </svg>
-          </button>
-        </div>
-        <div className={styles.controls}>
-          {running
-            ? <button className={styles.btn} onClick={pause}>Pause</button>
-            : <button className={styles.btn} onClick={start}>Start</button>
-          }
-          <button className={styles.btn} onClick={reset}>Reset</button>
+          {notesNode ?? <span className={styles.notesEmpty}>No notes for this slide.</span>}
         </div>
       </div>
     </div>

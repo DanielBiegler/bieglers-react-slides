@@ -168,7 +168,18 @@ export default (
           description: "One more → and the slide is complete.",
         },
       ]}
-    />
+    >
+      <Notes>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum reprehenderit eligendi quasi libero incidunt iusto tempora magnam eos maiores qui minima vero accusantium, atque ea dolor facilis a, possimus magni?
+        <ul>
+          <li>foo</li>
+          <li>bar</li>
+          <li>baz</li>
+        </ul>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Beatae, quidem nisi ex obcaecati vero recusandae accusamus amet alias labore ducimus quisquam maxime reprehenderit.
+      </Notes>
+    </Slide.Cards>
 
     <Slide.Centered reveal>
       <h2>A question worth sitting with</h2>
