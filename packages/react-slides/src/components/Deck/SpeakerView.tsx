@@ -129,14 +129,28 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
     return () => channel.close()
   }, [])
 
+  const runningRef = useRef(running)
+  const startRef = useRef(start)
+  const pauseRef = useRef(pause)
+  const resetRef = useRef(reset)
+  runningRef.current = running
+  startRef.current = start
+  pauseRef.current = pause
+  resetRef.current = reset
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
+      if (e.target instanceof HTMLButtonElement) return
       if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
         e.preventDefault()
         channelRef.current?.postMessage({ type: "NAV", direction: "next" } satisfies ChannelMessage)
       } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
         e.preventDefault()
         channelRef.current?.postMessage({ type: "NAV", direction: "prev" } satisfies ChannelMessage)
+      } else if (e.key === "q") {
+        runningRef.current ? pauseRef.current() : startRef.current()
+      } else if (e.key === "r") {
+        resetRef.current()
       }
     }
     window.addEventListener("keydown", onKey)
@@ -249,10 +263,10 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
           </div>
           <div className={styles.controls}>
             {running
-              ? <button className={styles.btn} onClick={pause}>Pause</button>
-              : <button className={styles.btn} onClick={start}>Start</button>
+              ? <button className={styles.btn} onClick={pause} title="Pause (Q)">Pause</button>
+              : <button className={styles.btn} onClick={start} title="Start (Q)">Start</button>
             }
-            <button className={styles.btn} onClick={reset}>Reset</button>
+            <button className={styles.btn} onClick={reset} title="Reset (R)">Reset</button>
           </div>
         </div>
       </div>
