@@ -132,6 +132,13 @@ export default (
       mediaPane="left"
     />
 
+    <Slide.Showcase
+      src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2400"
+      alt="Sunlit mountain range above the clouds"
+      title="The image is the point"
+      description="A full-bleed photo with an optional title and description over a gradient scrim."
+    />
+
     <Slide.Centered>
       <h2>That&apos;s it.</h2>
       <p style={{ color: "var(--rs-color-muted)" }}>

@@ -1,0 +1,52 @@
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--rs-bg);
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* object-fit is set inline from the `fit` prop */
+}
+
+/* Bottom scrim + caption. Text is white over a gradient so it stays legible on
+   any image, independent of the deck's light/dark theme. */
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 6rem var(--rs-slide-padding) calc(var(--rs-slide-padding) + 1.5rem);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: var(--rs-font-size-h3);
+  font-weight: var(--rs-font-weight-heading);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #fff;
+}
+
+.description {
+  font-size: var(--rs-font-size-base);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(255, 255, 255, 0.85);
+}
