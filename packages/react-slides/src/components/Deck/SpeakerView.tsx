@@ -11,6 +11,8 @@ interface SlideState {
   slideIndex: number
   total: number
   notes: string
+  step: number
+  stepCount: number
 }
 
 function useTimer() {
@@ -83,6 +85,8 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
     slideIndex: 0,
     total: slides.length,
     notes: "",
+    step: 0,
+    stepCount: 0,
   })
   const { elapsed, running, start, pause, reset } = useTimer()
   const currentRef = useRef<HTMLDivElement>(null)
@@ -116,7 +120,7 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
     channelRef.current?.postMessage({ type: "NAV", direction } satisfies ChannelMessage)
   }
 
-  const { slideIndex, total, notes } = state
+  const { slideIndex, total, notes, step, stepCount } = state
   const current = slides[slideIndex]
   const next = slides[slideIndex + 1]
 
@@ -124,7 +128,12 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
     <div className={styles.root} data-theme="dark">
       <div className={styles.slides}>
         <div className={styles.slideCol}>
-          <span className={styles.slideLabel}>Current — {slideIndex + 1} / {total}</span>
+          <span className={styles.slideLabel}>
+            Current — {slideIndex + 1} / {total}
+            {stepCount > 0 && (
+              <span className={styles.stepIndicator}>· Step {step} / {stepCount}</span>
+            )}
+          </span>
           <div className={styles.slideFrame} ref={currentRef}>
             {current && <ScaledSlide slide={current} containerRef={currentRef} />}
           </div>
@@ -156,8 +165,18 @@ export function SpeakerView({ slides }: SpeakerViewProps) {
           {formatTime(elapsed)}
         </span>
         <div className={styles.controls}>
-          <button className={styles.btn} onClick={() => nav("prev")}>← Prev</button>
-          <button className={styles.btn} onClick={() => nav("next")}>Next →</button>
+          <button className={styles.btn} onClick={() => nav("prev")} aria-label="Previous">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fillRule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
+            </svg>
+            Prev
+          </button>
+          <button className={styles.btn} onClick={() => nav("next")} aria-label="Next">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+              <path fillRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 1 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+            </svg>
+          </button>
         </div>
         <div className={styles.controls}>
           {running

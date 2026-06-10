@@ -40,6 +40,10 @@ _Avoid_: Presenter mode, second screen, backstage
 Speaker-facing text attached to a Slide, authored via the `<Notes>` helper component. Visible only in the Speaker View, never to the audience.
 _Avoid_: Comments, annotations, description
 
+**Step**:
+A point in a Slide's progressive reveal sequence. A Slide with Steps shows its content incrementally — each forward navigation advances to the next Step until all are exhausted, then moves to the next Slide. The current Step is persisted in the URL as `?step=N`. Only three layout/component types support Steps: `Slide.Cards` (reveals cards one by one), `Slide.Centered` (reveals direct children one by one), and `Code` (cycles through highlight ranges).
+_Avoid_: Fragment, build, animation phase, reveal phase
+
 **Starter Template**:
 A future clone-and-edit GitHub repository that gives new users a minimal working deck project without requiring a CLI. References the published Framework package.
 _Avoid_: Boilerplate, scaffold, CLI

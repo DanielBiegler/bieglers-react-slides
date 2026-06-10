@@ -61,6 +61,11 @@
   min-width: 100%;
   padding: 0 1.5rem;
   border-left: 3px solid transparent;
+  transition: background 200ms, border-left-color 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line { transition-duration: 1ms; }
 }
 
 .lineHot {

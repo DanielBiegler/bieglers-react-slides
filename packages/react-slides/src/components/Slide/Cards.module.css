@@ -89,3 +89,17 @@
   margin: 0;
   line-height: 1.6;
 }
+
+/* Step reveal — cards fade in as the presenter advances */
+.revealCard {
+  transition: opacity 200ms;
+}
+
+.cardHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revealCard { transition-duration: 1ms; }
+}

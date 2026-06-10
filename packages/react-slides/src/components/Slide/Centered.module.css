@@ -34,3 +34,17 @@
   font-style: normal;
   color: var(--rs-color-muted);
 }
+
+/* Step reveal — children fade in one by one */
+.revealItem {
+  transition: opacity 200ms;
+}
+
+.revealItemHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revealItem { transition-duration: 1ms; }
+}

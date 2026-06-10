@@ -152,6 +152,47 @@ export default (
     />
 
     <Slide.Cards
+      title="Cards reveal one by one"
+      reveal
+      cards={[
+        {
+          title: "Step 1",
+          description: "Press → and I appear first.",
+        },
+        {
+          title: "Step 2",
+          description: "Press → again and I follow.",
+        },
+        {
+          title: "Step 3",
+          description: "One more → and the slide is complete.",
+        },
+      ]}
+    />
+
+    <Slide.Centered reveal>
+      <h2>A question worth sitting with</h2>
+      <p style={{ color: "var(--rs-color-muted)" }}>
+        Press → to reveal the follow-up.
+      </p>
+    </Slide.Centered>
+
+    <Slide.Centered>
+      <h2>Stepped code highlights</h2>
+      <Code
+        language="tsx"
+        highlight={["2", "4", "2,4"]}
+        code={`
+<Slide.Centered>
+  <h2>Hello world</h2>
+  <p>Just write HTML inside a layout.</p>
+  <Notes>Only you can see this.</Notes>
+</Slide.Centered>
+        `}
+      />
+    </Slide.Centered>
+
+    <Slide.Cards
       title="Cards auto size too if you have more/less of them"
       cards={[
         {
