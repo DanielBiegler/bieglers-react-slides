@@ -166,7 +166,6 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
             {current && (
               <NotesContext value={setNotesNode}>
                 <ScaledSlide
-                  key={slideIndex}
                   slide={current}
                   step={step}
                   slideIndex={slideIndex}
