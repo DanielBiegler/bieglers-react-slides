@@ -16,6 +16,10 @@ _Avoid_: Page, frame, card
 A pre-built slide component that defines the visual structure of a Slide. Exposed under the `Slide` namespace (e.g. `Slide.Cover`, `Slide.Centered`, `Slide.Split`). Content inside layouts is authored as native HTML, styled by CSS custom properties.
 _Avoid_: Template, component, slide type
 
+**Transition**:
+The visual animation played when moving between Slides in a Deck. A deck-level setting (`none`, `fade`, or `slide`) configured on `<Deck>`. Audience-facing only — never shown in the Speaker View.
+_Avoid_: Animation, effect, motion
+
 **Build**:
 The compiled output of a Deck — a self-contained folder (HTML + bundled assets) that runs in a browser without a server. Each Slide is accessible via a URL route (e.g. `/2`, `/3`).
 _Avoid_: Export, bundle, output

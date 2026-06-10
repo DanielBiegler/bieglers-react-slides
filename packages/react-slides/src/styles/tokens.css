@@ -58,6 +58,8 @@ html, body {
   --rs-slide-padding: 4rem;
   --rs-radius:        0.5rem;
   --rs-gap:           2rem;
+
+  --rs-transition-duration: 280ms;
 }
 
 /* ── light (system preference) ── */
