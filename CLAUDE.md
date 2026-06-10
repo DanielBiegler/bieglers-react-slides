@@ -25,7 +25,7 @@ bun install
 - **Content is native HTML** — `<h1>`, `<blockquote>`, `<ul>`, `<img>` etc., styled by CSS custom properties. No content component abstraction.
 - **No Tailwind** — styling is CSS Modules + CSS custom properties. Tokens live in `packages/react-slides/src/styles/tokens.css`.
 - **No server-side logic** — client-side routing only via React Router + HashRouter.
-- Helper components (`Code`, `Notes`, `Image`) are flat named exports, not under the `Slide` namespace.
+- Helper components (`Code`, `Notes`, `Image`, `Footnote`) are flat named exports, not under the `Slide` namespace.
 
 ## Gotchas
 

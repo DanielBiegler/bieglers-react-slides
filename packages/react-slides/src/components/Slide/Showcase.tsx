@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import styles from "./Showcase.module.css"
 
 interface ShowcaseProps {
@@ -9,9 +10,11 @@ interface ShowcaseProps {
   description?: string
   /** How the image fills the slide. Defaults to "cover" (full-bleed, may crop). */
   fit?: "cover" | "contain"
+  /** Non-visual helpers such as <Footnote> or <Notes>. */
+  children?: ReactNode
 }
 
-export function Showcase({ src, alt = "", title, description, fit = "cover" }: ShowcaseProps) {
+export function Showcase({ src, alt = "", title, description, fit = "cover", children }: ShowcaseProps) {
   return (
     <div className={styles.root}>
       <img className={styles.image} src={src} alt={alt} style={{ objectFit: fit }} />
@@ -21,6 +24,7 @@ export function Showcase({ src, alt = "", title, description, fit = "cover" }: S
           {description && <p className={styles.description}>{description}</p>}
         </div>
       )}
+      {children}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Code, Deck, Notes, Slide } from "@danielbiegler/react-slides"
+import { Code, Deck, Footnote, Notes, Slide } from "@danielbiegler/react-slides"
 
 export default (
   <Deck title="react-slides demo" author="Daniel Biegler" date="2026" theme="auto" transition="slide">
@@ -72,6 +72,7 @@ export default (
       <h2>Simple by default</h2>
       <p>Three layouts. Native HTML. CSS custom properties.</p>
       <Notes>Introduce the project — what problem it solves and who it's for.</Notes>
+      <Footnote>Source: react-slides design notes, 2026</Footnote>
     </Slide.Centered>
 
     <Slide.Centered>
@@ -137,7 +138,14 @@ export default (
       alt="Sunlit mountain range above the clouds"
       title="The image is the point"
       description="A full-bleed photo with an optional title and description over a gradient scrim."
-    />
+    >
+      <Footnote>
+        Photo: Qingbao Meng /{" "}
+        <a href="https://unsplash.com/photos/aerial-photography-of-mountain-ranges-jba6IjjuYP4" target="_blank" rel="noreferrer">
+          Unsplash
+        </a>
+      </Footnote>
+    </Slide.Showcase>
 
     <Slide.Centered>
       <h2>That&apos;s it.</h2>

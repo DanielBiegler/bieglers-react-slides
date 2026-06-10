@@ -17,6 +17,16 @@ html, body {
   height: 100%;
 }
 
+a {
+  color: var(--rs-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* ── dark (default) ── */
 :root {
   --rs-bg:             #0f0f13;

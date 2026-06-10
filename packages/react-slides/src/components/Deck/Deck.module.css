@@ -28,6 +28,24 @@
   inset: 0;
 }
 
+/* Source citation, pinned bottom-left above the deck footer. Rendered inside the
+   slide layer so it travels with the slide during transitions. */
+.footnote {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 2.75rem;
+  max-width: 60%;
+  font-size: var(--rs-font-size-small);
+  line-height: 1.35;
+  color: var(--rs-color-muted);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  /* selectable so the citation can be copied; only this element is interactive,
+     so it doesn't interfere with slide navigation */
+  pointer-events: auto;
+  user-select: text;
+  width: fit-content;
+}
+
 @keyframes rs-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }

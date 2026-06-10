@@ -1,4 +1,4 @@
-import { Children, ReactElement, useCallback, useEffect, useRef, useState } from "react"
+import { Children, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import {
   HashRouter,
   Navigate,
@@ -8,6 +8,7 @@ import {
   useParams,
 } from "react-router"
 import { DeckContext } from "../../context/DeckContext"
+import { FootnoteContext } from "../../context/FootnoteContext"
 import { NotesContext } from "../../context/NotesContext"
 import "../../styles/tokens.css"
 import styles from "./Deck.module.css"
@@ -41,6 +42,30 @@ function exitClass(transition: Transition, direction: number): string {
   if (transition === "fade") return styles.fadeOut
   if (transition === "slide") return direction < 0 ? styles.slideOutRight : styles.slideOutLeft
   return ""
+}
+
+/** Wraps one slide, providing a FootnoteContext so a <Footnote> inside it can
+ *  register content that renders in this layer (pinned bottom-left, above the
+ *  footer). Living inside the layer means it animates with the slide and is not
+ *  clipped by an overflow-hidden pane where the <Footnote> may be authored. */
+function SlideLayer({
+  slide,
+  className,
+  onAnimationEnd,
+}: {
+  slide: ReactElement
+  className: string
+  onAnimationEnd?: (e: React.AnimationEvent<HTMLDivElement>) => void
+}) {
+  const [footnote, setFootnote] = useState<ReactNode>(null)
+  return (
+    <FootnoteContext value={setFootnote}>
+      <div className={className} onAnimationEnd={onAnimationEnd}>
+        {slide}
+        {footnote != null && <div className={styles.footnote}>{footnote}</div>}
+      </div>
+    </FootnoteContext>
+  )
 }
 
 function SlideShell({
@@ -125,22 +150,20 @@ function SlideShell({
       <div className={styles.slide}>
         <div className={styles.stage}>
           {anim && (
-            <div
+            <SlideLayer
               key={`out-${anim.outgoing}`}
+              slide={slides[anim.outgoing]}
               className={`${styles.layer} ${exitClass(transition, anim.direction)}`}
               onAnimationEnd={(e) => {
                 if (e.target === e.currentTarget) setAnim(null)
               }}
-            >
-              {slides[anim.outgoing]}
-            </div>
+            />
           )}
-          <div
+          <SlideLayer
             key={`in-${slideIndex}`}
+            slide={slides[slideIndex]}
             className={`${styles.layer} ${anim ? enterClass(transition, anim.direction) : ""}`}
-          >
-            {slides[slideIndex]}
-          </div>
+          />
         </div>
         <footer className={styles.footer}>
           <span>{title}</span>
