@@ -43,7 +43,13 @@ html, body {
   --rs-font-bricolage-grotesque: "Bricolage Grotesque Variable", system-ui, -apple-system, sans-serif;
   --rs-font-unbounded:          "Unbounded Variable", system-ui, -apple-system, sans-serif;
 
-  --rs-font-sans: var(--rs-font-inter);
+  /* named serif stacks (used for quotes) — assign one to --rs-font-serif */
+  --rs-font-fraunces:   "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --rs-font-newsreader: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --rs-font-playfair:   "Playfair Display Variable", Georgia, "Times New Roman", serif;
+
+  --rs-font-sans:  var(--rs-font-inter);
+  --rs-font-serif: var(--rs-font-fraunces);
   --rs-font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 
   --rs-font-size-base:  1.5rem;
