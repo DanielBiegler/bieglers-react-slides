@@ -1,7 +1,7 @@
 import { Code, Deck, Notes, Slide } from "@danielbiegler/react-slides"
 
 export default (
-  <Deck title="react-slides demo" author="Daniel Biegler" date="2026" theme="dark" transition="slide">
+  <Deck title="react-slides demo" author="Daniel Biegler" date="2026" theme="auto" transition="slide">
     <Slide.Cover
       title="react-slides"
       subtitle="Portable presentations with React"
