@@ -133,6 +133,70 @@ export default (
       mediaPane="left"
     />
 
+    <Slide.Cards
+      title="Three reasons to try react-slides"
+      cards={[
+        {
+          title: "Zero lock-in",
+          description: "Your deck is a TSX file. No proprietary format, no walled garden — version control it like code.",
+        },
+        {
+          title: "Native HTML",
+          description: "Write headings, lists, and blockquotes instead of drag-and-drop boxes.",
+        },
+        {
+          title: "CSS tokens",
+          description: "Override any design decision — colors, fonts, spacing — with a single custom property.",
+        },
+      ]}
+    />
+
+    <Slide.Cards
+      title="Cards auto size too if you have more/less of them"
+      cards={[
+        {
+          title: "Custom border",
+          description: "Open /#/speaker in a second tab for notes and slide preview.",
+          border: "left",
+        },
+        {
+          title: "Custom accents",
+          description: "Each card can carry its own accent color and border side.",
+          accent: "#e06c75",
+          border: "top",
+        },
+      ]}
+    />
+
+    <Slide.Cards
+      title="Card content can be any ReactNode"
+      cards={[
+        {
+          title: "Plain strings",
+          description: "A string still renders as a styled paragraph — no change needed.",
+        },
+        {
+          title: "Inline markup",
+          description: (
+            <p style={{ margin: 0, color: "var(--rs-color-muted)", lineHeight: 1.6 }}>
+              Mix in <strong>bold text</strong>, <code>inline code</code>, or{" "}
+              <a href="#" onClick={(e) => e.preventDefault()}>links</a> wherever you need them.
+            </p>
+          ),
+        },
+        {
+          title: "Custom structure",
+          description: (
+            <ul style={{ margin: 0, paddingLeft: "1.25em", color: "var(--rs-color-muted)", lineHeight: 1.8 }}>
+              <li>Full control over content</li>
+              <li>Use any HTML or components</li>
+              <li>Styles inherit from the card</li>
+            </ul>
+          ),
+        },
+      ]}
+    />
+
     <Slide.Showcase
       src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2400"
       alt="Sunlit mountain range above the clouds"
