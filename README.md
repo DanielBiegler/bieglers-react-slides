@@ -1,4 +1,4 @@
-# react-slides
+# Bieglers React Slides
 
 Portable, local presentations authored in TSX.
 
