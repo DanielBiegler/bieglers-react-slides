@@ -167,7 +167,7 @@
   background: #111;
   border: 1px solid #333;
   color: var(--rs-color);
-  padding: 0.35rem 0.8rem;
+  padding: 0.35rem 0.5rem;
   border-radius: var(--rs-radius);
   font-size: var(--rs-font-size-small);
   cursor: pointer;
