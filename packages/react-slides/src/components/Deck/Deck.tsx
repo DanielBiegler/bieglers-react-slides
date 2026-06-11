@@ -28,6 +28,41 @@ interface DeckProps {
 
 export const BROADCAST_CHANNEL = "react-slides"
 
+const FONT_LOADS = [
+  '400 1em "Inter Variable"',
+  '400 1em "Plus Jakarta Sans Variable"',
+  '400 1em "Bricolage Grotesque Variable"',
+  '400 1em "Unbounded Variable"',
+  '400 1em "Fraunces Variable"',
+  'italic 400 1em "Fraunces Variable"',
+  '400 1em "Newsreader Variable"',
+  'italic 400 1em "Newsreader Variable"',
+  '400 1em "Playfair Display Variable"',
+  'italic 400 1em "Playfair Display Variable"',
+]
+
+function useReadinessGate() {
+  const [navigationReady, setNavigationReady] = useState(false)
+  const [assetsLoaded, setAssetsLoaded] = useState(false)
+
+  useEffect(() => {
+    const fallback = setTimeout(() => setNavigationReady(true), 3000)
+
+    Promise.allSettled([
+      ...FONT_LOADS.map((f) => document.fonts.load(f)),
+      document.fonts.ready,
+    ]).then(() => {
+      clearTimeout(fallback)
+      setNavigationReady(true)
+      setAssetsLoaded(true)
+    })
+
+    return () => clearTimeout(fallback)
+  }, [])
+
+  return { navigationReady, assetsLoaded }
+}
+
 export type ChannelMessage =
   | { type: "SLIDE_STATE"; slideIndex: number; total: number; step: number; stepCount: number }
   | { type: "NAV"; direction: "next" | "prev" }
@@ -83,6 +118,7 @@ function SlideShell({
   transition,
   slides,
   total,
+  navigationReady,
 }: {
   title: string
   author?: string
@@ -90,6 +126,7 @@ function SlideShell({
   transition: Transition
   slides: ReactElement[]
   total: number
+  navigationReady: boolean
 }) {
   const { index } = useParams<{ index: string }>()
   const navigate = useNavigate()
@@ -97,6 +134,9 @@ function SlideShell({
   const slideIndex = Math.max(0, Math.min(parseInt(index ?? "1", 10) - 1, total - 1))
   const step = Math.max(0, parseInt(searchParams.get("step") ?? "0", 10))
   const channel = useRef<BroadcastChannel | null>(null)
+
+  const navigationReadyRef = useRef(navigationReady)
+  navigationReadyRef.current = navigationReady
 
   // Step count for the current slide — registered by step-capable components (Cards,
   // Centered, Code) via StepsContext. Reset synchronously during render on slide change
@@ -138,6 +178,7 @@ function SlideShell({
 
   // Step-aware navigation helpers
   const goNext = useCallback(() => {
+    if (!navigationReadyRef.current) return
     if (step < stepCountRef.current) {
       setSearchParams({ step: String(step + 1) }, { replace: true })
     } else if (slideIndex + 2 <= total) {
@@ -146,6 +187,7 @@ function SlideShell({
   }, [step, slideIndex, total, navigate, setSearchParams])
 
   const goPrev = useCallback(() => {
+    if (!navigationReadyRef.current) return
     // Clamp against registered count in case the URL step is somehow out of range.
     const effectiveStep = Math.min(step, stepCountRef.current)
     if (effectiveStep > 0) {
@@ -268,9 +310,13 @@ function DeckRouter({
   transition: Transition
 }) {
   const total = slides.length
+  const { navigationReady, assetsLoaded } = useReadinessGate()
 
   return (
     <div className={styles.root} data-theme={theme === "auto" ? undefined : theme}>
+      {!assetsLoaded && (
+        <div className={styles.loadingIndicator} title="Loading fonts and images…" />
+      )}
       <Routes>
         <Route path="/" element={<Navigate to="/1" replace />} />
         <Route
@@ -283,6 +329,7 @@ function DeckRouter({
               transition={transition}
               slides={slides}
               total={total}
+              navigationReady={navigationReady}
             />
           }
         />

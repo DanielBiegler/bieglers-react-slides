@@ -109,3 +109,21 @@
 .footerRight {
   text-align: right;
 }
+
+.loadingIndicator {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  border: 2px solid var(--rs-border);
+  border-top-color: var(--rs-accent);
+  animation: rs-spin 0.7s linear infinite;
+  z-index: 100;
+  cursor: default;
+}
+
+@keyframes rs-spin {
+  to { transform: rotate(360deg); }
+}
