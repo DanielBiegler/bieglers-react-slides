@@ -31,6 +31,7 @@ export const BROADCAST_CHANNEL = "react-slides"
 export type ChannelMessage =
   | { type: "SLIDE_STATE"; slideIndex: number; total: number; step: number; stepCount: number }
   | { type: "NAV"; direction: "next" | "prev" }
+  | { type: "PING" }
 
 /** Direction: +1 = forward (next), -1 = backward (prev). */
 function enterClass(transition: Transition, direction: number): string {
@@ -165,13 +166,27 @@ function SlideShell({
   goNextRef.current = goNext
   goPrevRef.current = goPrev
 
+  // Always-current snapshot used when responding to PING from Speaker View
+  const currentStateRef = useRef({ slideIndex, total, step })
+  currentStateRef.current = { slideIndex, total, step }
+
   // BroadcastChannel — open once, reads latest nav callbacks via refs
   useEffect(() => {
     channel.current = new BroadcastChannel(BROADCAST_CHANNEL)
     channel.current.onmessage = (e: MessageEvent<ChannelMessage>) => {
-      if (e.data.type !== "NAV") return
-      if (e.data.direction === "next") goNextRef.current()
-      if (e.data.direction === "prev") goPrevRef.current()
+      if (e.data.type === "NAV") {
+        if (e.data.direction === "next") goNextRef.current()
+        if (e.data.direction === "prev") goPrevRef.current()
+      } else if (e.data.type === "PING") {
+        const { slideIndex, total, step } = currentStateRef.current
+        channel.current?.postMessage({
+          type: "SLIDE_STATE",
+          slideIndex,
+          total,
+          step,
+          stepCount: stepCountRef.current,
+        } satisfies ChannelMessage)
+      }
     }
     return () => channel.current?.close()
   }, [])

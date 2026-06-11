@@ -1,7 +1,8 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from "react"
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { BROADCAST_CHANNEL, ChannelMessage } from "./Deck"
 import { DeckContext } from "../../context/DeckContext"
 import { NotesContext } from "../../context/NotesContext"
+import { StepsContext } from "../../context/StepsContext"
 import styles from "./SpeakerView.module.css"
 import "../../styles/tokens.css"
 
@@ -107,12 +108,23 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
     step: 0,
     stepCount: 0,
   })
+  const [connected, setConnected] = useState(false)
   const [notesNode, setNotesNode] = useState<ReactNode>(null)
   const { elapsed, running, start, pause, reset } = useTimer()
   const currentRef = useRef<HTMLDivElement>(null)
   const nextRef = useRef<HTMLDivElement>(null)
   const stepPreviewRef = useRef<HTMLDivElement>(null)
   const channelRef = useRef<BroadcastChannel | null>(null)
+  const disconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const stepCountRef = useRef(0)
+  const stepCountsCache = useRef<Record<number, number>>({})
+
+  // Reset stepCountRef synchronously when slideIndex changes (mirrors SlideShell's pattern)
+  const prevSlideIndexForSteps = useRef(state.slideIndex)
+  if (prevSlideIndexForSteps.current !== state.slideIndex) {
+    prevSlideIndexForSteps.current = state.slideIndex
+    stepCountRef.current = 0
+  }
 
   useEffect(() => {
     const prev = document.title
@@ -120,46 +132,102 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
     return () => { document.title = prev }
   }, [title])
 
+  const onStepsRegistered = useCallback((count: number) => {
+    const idx = prevSlideIndexForSteps.current
+    stepCountRef.current = count
+    if (count > 0) stepCountsCache.current[idx] = count
+    else delete stepCountsCache.current[idx]
+    setState(s => s.stepCount === count ? s : { ...s, stepCount: count })
+  }, [])
+
   useEffect(() => {
     const channel = new BroadcastChannel(BROADCAST_CHANNEL)
     channelRef.current = channel
     channel.onmessage = (e: MessageEvent<ChannelMessage>) => {
-      if (e.data.type === "SLIDE_STATE") setState(e.data)
+      if (e.data.type === "SLIDE_STATE") {
+        setState(e.data)
+        setConnected(true)
+        if (disconnectTimerRef.current !== null) clearTimeout(disconnectTimerRef.current)
+        disconnectTimerRef.current = setTimeout(() => setConnected(false), 4000)
+      }
     }
-    return () => channel.close()
+    channel.postMessage({ type: "PING" } satisfies ChannelMessage)
+    const pingId = setInterval(() => {
+      channel.postMessage({ type: "PING" } satisfies ChannelMessage)
+    }, 2000)
+    return () => {
+      channel.close()
+      clearInterval(pingId)
+      if (disconnectTimerRef.current !== null) clearTimeout(disconnectTimerRef.current)
+    }
   }, [])
+
+  function goNext() {
+    setState(s => {
+      if (s.step < stepCountRef.current) return { ...s, step: s.step + 1 }
+      if (s.slideIndex + 1 < s.total) return { ...s, slideIndex: s.slideIndex + 1, step: 0, stepCount: 0 }
+      return s
+    })
+  }
+
+  function goPrev() {
+    setState(s => {
+      const effectiveStep = Math.min(s.step, stepCountRef.current)
+      if (effectiveStep > 0) return { ...s, step: effectiveStep - 1 }
+      if (s.slideIndex > 0) {
+        const prevCount = stepCountsCache.current[s.slideIndex - 1] ?? 0
+        return { ...s, slideIndex: s.slideIndex - 1, step: prevCount, stepCount: prevCount }
+      }
+      return s
+    })
+  }
+
+  function nav(direction: "next" | "prev") {
+    if (connected) {
+      channelRef.current?.postMessage({ type: "NAV", direction } satisfies ChannelMessage)
+    } else {
+      direction === "next" ? goNext() : goPrev()
+    }
+  }
+
+  function openSlides() {
+    window.open(window.location.href.replace(/#.*$/, "") + `#/${state.slideIndex + 1}`)
+  }
 
   const runningRef = useRef(running)
   const startRef = useRef(start)
   const pauseRef = useRef(pause)
   const resetRef = useRef(reset)
+  const navRef = useRef(nav)
+  const openSlidesRef = useRef(openSlides)
   runningRef.current = running
   startRef.current = start
   pauseRef.current = pause
   resetRef.current = reset
+  navRef.current = nav
+  openSlidesRef.current = openSlides
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLButtonElement) return
       if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
         e.preventDefault()
-        channelRef.current?.postMessage({ type: "NAV", direction: "next" } satisfies ChannelMessage)
+        navRef.current("next")
       } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
         e.preventDefault()
-        channelRef.current?.postMessage({ type: "NAV", direction: "prev" } satisfies ChannelMessage)
+        navRef.current("prev")
       } else if (e.key === "q") {
         runningRef.current ? pauseRef.current() : startRef.current()
       } else if (e.key === "r") {
         resetRef.current()
+      } else if (e.key === "o") {
+        e.preventDefault()
+        openSlidesRef.current()
       }
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [])
-
-  function nav(direction: "next" | "prev") {
-    channelRef.current?.postMessage({ type: "NAV", direction } satisfies ChannelMessage)
-  }
 
   const { slideIndex, total, step, stepCount } = state
   const current = slides[slideIndex]
@@ -171,24 +239,38 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
       <div className={styles.leftCol}>
         <div className={styles.slideCol}>
           <span className={styles.slideLabel}>
+            <span
+              className={styles.connectionDot}
+              data-state={connected ? "connected" : "disconnected"}
+            />
             Current — {slideIndex + 1} / {total}
             {stepCount > 0 && (
               <span className={styles.stepIndicator}>· Step {step} / {stepCount}</span>
             )}
+            <button
+              className={styles.btn}
+              style={{ marginLeft: "auto" }}
+              onClick={openSlides}
+              title="Open slides (O)"
+            >
+              Open
+            </button>
           </span>
           <div className={styles.slideFrame} ref={currentRef}>
             {current && (
               <NotesContext value={setNotesNode}>
-                <ScaledSlide
-                  slide={current}
-                  step={step}
-                  slideIndex={slideIndex}
-                  total={total}
-                  title={title}
-                  author={author}
-                  date={date}
-                  containerRef={currentRef}
-                />
+                <StepsContext value={onStepsRegistered}>
+                  <ScaledSlide
+                    slide={current}
+                    step={step}
+                    slideIndex={slideIndex}
+                    total={total}
+                    title={title}
+                    author={author}
+                    date={date}
+                    containerRef={currentRef}
+                  />
+                </StepsContext>
               </NotesContext>
             )}
             {showStepPreview && current && (
@@ -263,10 +345,10 @@ export function SpeakerView({ slides, title, author, date }: SpeakerViewProps) {
           </div>
           <div className={styles.controls}>
             {running
-              ? <button className={styles.btn} onClick={pause} title="Pause (Q)">Pause</button>
-              : <button className={styles.btn} onClick={start} title="Start (Q)">Start</button>
+              ? <button className={styles.btn} onClick={pause} title="Pauses the presentation timer (Q)">Pause</button>
+              : <button className={styles.btn} onClick={start} title="Starts the presentation timer (Q)">Start</button>
             }
-            <button className={styles.btn} onClick={reset} title="Reset (R)">Reset</button>
+            <button className={styles.btn} onClick={reset} title="Resets the presentation timer (R)">Reset</button>
           </div>
         </div>
       </div>

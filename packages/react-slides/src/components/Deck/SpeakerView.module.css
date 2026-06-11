@@ -34,7 +34,20 @@
   color: var(--rs-color-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
 }
+
+.connectionDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #444;
+  flex-shrink: 0;
+}
+
+.connectionDot[data-state="connected"] { background: #22c55e; }
 
 .stepIndicator {
   margin-left: 0.6em;
