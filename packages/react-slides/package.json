@@ -1,6 +1,15 @@
 {
   "name": "@danielbiegler/react-slides",
   "version": "0.1.0",
+  "description": "Framework for building beautiful, portable, local presentations in TSX",
+  "keywords": ["react", "presentations", "slides", "typescript", "vite"],
+  "author": "Daniel Biegler",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielBiegler/bieglers-react-slides.git"
+  },
+  "homepage": "https://danielbiegler.github.io/bieglers-react-slides/",
   "type": "module",
   "exports": {
     ".": {
@@ -14,7 +23,7 @@
     }
   },
   "sideEffects": ["dist/index.css"],
-  "files": ["dist"],
+  "files": ["dist", "LICENSE"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly --outDir dist && cp src/styles/fonts/LICENSE-*.txt dist/",
     "dev": "vite build --watch"
@@ -22,7 +31,11 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.0.0"
+    "react-router": "^7.0.0",
+    "vite": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": { "optional": true }
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
