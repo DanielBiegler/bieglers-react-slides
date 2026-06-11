@@ -1,6 +1,6 @@
 # Bieglers React Slides
 
-Portable, local presentations authored in TSX.
+Beautiful, portable, local presentations authored in TSX.
 
 Write slides as React components, navigate with arrow keys, and present from a self-contained folder that runs in any browser — no server required.
 
@@ -12,13 +12,13 @@ Purposefully Code-First and emphasis on Type-Safety, so that you can iterate wit
 
 ## Features
 
-- Seven layouts: Cover, CoverCentered, CoverSplit, Centered, Split, Showcase, Cards
+- Nine layouts: Cover, CoverCentered, CoverSplit, Centered, Split, Showcase, Video, Cards, List
 - Native HTML content styled by CSS custom properties
-- Progressive reveal via Steps (Cards, Centered, Code)
+- Progressive reveal via Steps (Cards, Centered, List, Code)
 - Light and dark theme with system preference detection
 - Slide transitions: fade and slide
 - Speaker view with notes, timer, and next-slide preview — synced via BroadcastChannel
-- Keyboard navigation (arrow keys + space)
+- Keyboard navigation (arrow keys, space, F for fullscreen)
 - Offline-capable via PWA service worker
 
 ## Packages
