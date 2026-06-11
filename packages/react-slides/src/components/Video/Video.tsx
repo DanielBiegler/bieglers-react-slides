@@ -14,6 +14,7 @@ export function Video({
   loop = false,
   controls = false,
   playsInline = true,
+  preload = "metadata",
   ...rest
 }: VideoProps) {
   return (

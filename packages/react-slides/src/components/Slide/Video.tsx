@@ -37,6 +37,7 @@ export function Video({
         controls={controls}
         poster={poster}
         playsInline
+        preload="metadata"
         style={{ objectFit: fit }}
       />
       {(title || description) && (
