@@ -1,0 +1,58 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rs-gap) * 0.5);
+}
+
+.list[data-sizing="fit"] {
+  width: fit-content;
+}
+
+.item {
+  background: var(--rs-surface);
+  border: 1px solid var(--rs-border);
+  overflow: hidden;
+}
+
+/* Accent border — 6px on the specified side; radius adapts so flat corners
+   always align with the accent edge, rounded corners on the opposite side. */
+.item[data-border="left"] {
+  border-left: 6px solid var(--rs-list-item-accent, var(--rs-accent));
+  border-radius: 0 var(--rs-radius) var(--rs-radius) 0;
+}
+.item[data-border="right"] {
+  border-right: 6px solid var(--rs-list-item-accent, var(--rs-accent));
+  border-radius: var(--rs-radius) 0 0 var(--rs-radius);
+}
+
+.itemInner {
+  padding: 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.itemInner[data-align="center"] {
+  text-align: center;
+}
+
+.itemInner[data-align="right"] {
+  text-align: right;
+}
+
+.itemTitle {
+  font-size: var(--rs-font-size-base);
+  font-weight: var(--rs-font-weight-heading);
+  color: var(--rs-color);
+  line-height: 1.2;
+}
+
+.itemContent {
+  font-size: var(--rs-font-size-base);
+  color: var(--rs-color-muted);
+  margin: 0;
+  line-height: 1.6;
+}

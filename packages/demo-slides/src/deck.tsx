@@ -1,4 +1,4 @@
-import { Code, Deck, Footnote, Notes, Slide } from "@danielbiegler/react-slides"
+import { Code, Deck, Footnote, List, Notes, Slide } from "@danielbiegler/react-slides"
 import imgMountainSplit from "../assets/pietro-de-grandi-Q5dMq3cKqec-unsplash.jpg"
 import imgMountainShowcase from "../assets/simon-twukN12EN7c-unsplash.jpg"
 
@@ -279,15 +279,25 @@ export default (
       ]}
     />
 
-    <Slide.List
-      title="Compact list"
-      description='sizing="fit" shrinks the list to the widest item.'
-      sizing="fit"
-      items={[
-        { title: "Short", content: "Fits the content, not the slide." },
-        { title: "A bit longer title", content: "All items match the widest one." },
-        { title: "Medium length", content: "Easier to read on sparse slides." },
-      ]}
+    <Slide.Split
+      left={<img src={imgMountainSplit} alt="Mountain landscape" />}
+      right={
+        <>
+          <h2>Compact list</h2>
+          <p style={{ color: "var(--rs-color-muted)" }}>
+            sizing="fit" shrinks the list to the widest item.
+          </p>
+          <List
+            sizing="fit"
+            items={[
+              { title: "Short" },
+              { title: "All items match the widest one." },
+              { title: "Short" },
+            ]}
+          />
+        </>
+      }
+      mediaPane="left"
     />
 
     <Slide.List
