@@ -4,6 +4,8 @@ Portable, local presentations authored in TSX.
 
 Write slides as React components, navigate with arrow keys, and present from a self-contained folder that runs in any browser — no server required.
 
+Purposefully Code-First and emphasis on Type-Safety, so that you can iterate with your AI-Agent and build/edit the slide deck on the fly.
+
 ## Demo
 
 - https://danielbiegler.github.io/bieglers-react-slides/
