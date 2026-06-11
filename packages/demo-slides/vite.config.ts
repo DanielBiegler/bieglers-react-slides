@@ -39,6 +39,12 @@ function preloadPresentationAssets(): Plugin {
               attrs: { rel: "preload", href, as: "image" },
               injectTo: "head",
             })
+          } else if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
+            tags.push({
+              tag: "link",
+              attrs: { rel: "preload", href, as: "video" },
+              injectTo: "head",
+            })
           }
         }
         return tags
