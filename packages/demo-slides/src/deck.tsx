@@ -256,6 +256,68 @@ export default (
       ]}
     />
 
+    <Slide.List
+      title="Why react-slides?"
+      description="A few reasons to give it a shot."
+      items={[
+        {
+          title: "Zero lock-in",
+          content: "Your deck is a TSX file. Version control it, diff it, review it like code.",
+        },
+        {
+          title: "Native HTML",
+          content: "Write real headings, lists, and blockquotes — no drag-and-drop abstractions.",
+        },
+        {
+          title: "CSS custom properties",
+          content: "Every token is overridable. Fonts, colors, spacing — one property changes everything.",
+        },
+        {
+          title: "Portable",
+          content: "Builds to a static site. Deploy anywhere: GitHub Pages, Vercel, S3.",
+        },
+      ]}
+    />
+
+    <Slide.List
+      title="Compact list"
+      description='sizing="fit" shrinks the list to the widest item.'
+      sizing="fit"
+      items={[
+        { title: "Short", content: "Fits the content, not the slide." },
+        { title: "A bit longer title", content: "All items match the widest one." },
+        { title: "Medium length", content: "Easier to read on sparse slides." },
+      ]}
+    />
+
+    <Slide.List
+      title="List — right border & custom accents"
+      border="right"
+      items={[
+        {
+          align: "left",
+          title: "Default accent",
+          content: "Falls back to --rs-accent when no accent prop is given.",
+        },
+        {
+          align: "center",
+          title: "Per-item override",
+          content: "Pass any CSS color to the accent prop on an individual item.",
+          accent: "#e06c75",
+        },
+        {
+          align: "right",
+          title: "ReactNode content",
+          accent: "#98c379",
+          content: (
+            <p style={{ margin: 0, color: "var(--rs-color-muted)", lineHeight: 1.6 }}>
+              Content can be <strong>any ReactNode</strong> — rich markup, lists, or custom components.
+            </p>
+          ),
+        },
+      ]}
+    />
+
     <Slide.Showcase
       src={imgMountainShowcase}
       alt="White mountain near a body of water"
