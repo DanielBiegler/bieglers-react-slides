@@ -25,6 +25,7 @@
   "sideEffects": ["dist/index.css"],
   "files": ["dist", "LICENSE", "CHANGELOG.md"],
   "scripts": {
+    "prepublishOnly": "bun run build",
     "build": "vite build && tsc --emitDeclarationOnly --outDir dist && cp src/styles/fonts/LICENSE-*.txt dist/",
     "dev": "vite build --watch"
   },
