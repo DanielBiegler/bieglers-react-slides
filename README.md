@@ -6,8 +6,11 @@ Write slides as React components, navigate with arrow keys, and present from a s
 
 ## Features
 
-- Three layouts: Cover, Centered, Split
+- Seven layouts: Cover, CoverCentered, CoverSplit, Centered, Split, Showcase, Cards
 - Native HTML content styled by CSS custom properties
+- Progressive reveal via Steps (Cards, Centered, Code)
+- Light and dark theme with system preference detection
+- Slide transitions: fade and slide
 - Speaker view with notes, timer, and next-slide preview — synced via BroadcastChannel
 - Keyboard navigation (arrow keys + space)
 - Offline-capable via PWA service worker
