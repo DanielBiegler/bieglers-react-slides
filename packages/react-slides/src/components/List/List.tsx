@@ -1,4 +1,6 @@
-import { ReactNode } from "react"
+import { ReactNode, useContext, useLayoutEffect } from "react"
+import { DeckContext } from "../../context/DeckContext"
+import { StepsContext } from "../../context/StepsContext"
 import styles from "./List.module.css"
 
 type BorderSide = "left" | "right"
@@ -25,19 +27,31 @@ export interface ListProps {
    * "fit" — list shrinks to the width of the widest item; all items match that width.
    */
   sizing?: "full" | "fit"
+  /** Reveal items one by one as the presenter advances. */
+  reveal?: boolean
 }
 
-export function List({ items, border = "left", accent, sizing = "full" }: ListProps) {
+export function List({ items, border = "left", accent, sizing = "full", reveal }: ListProps) {
+  const register = useContext(StepsContext)
+  const { step } = useContext(DeckContext)
   const accentVar = accent ?? "var(--rs-accent)"
+
+  useLayoutEffect(() => {
+    if (!reveal) return
+    register(items.length)
+    return () => register(0)
+  }, [reveal, items.length, register])
+
   return (
     <ul className={styles.list} data-sizing={sizing}>
       {items.map((item, i) => {
         const color = item.accent ?? accentVar
         const align = item.align ?? (border === "right" ? "right" : "left")
+        const isVisible = !reveal || step > i
         return (
           <li
             key={i}
-            className={styles.item}
+            className={`${styles.item}${reveal ? ` ${styles.revealItem}` : ""}${reveal && !isVisible ? ` ${styles.itemHidden}` : ""}`}
             data-border={border}
             style={{ "--rs-list-item-accent": color } as React.CSSProperties}
           >

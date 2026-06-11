@@ -279,6 +279,17 @@ export default (
       ]}
     />
 
+    <Slide.List
+      title="List reveal"
+      description="Press → to reveal items one by one."
+      reveal
+      items={[
+        { title: "First", content: "Press → and I appear." },
+        { title: "Second", content: "Press → again." },
+        { title: "Third", content: "One more → and the list is complete." },
+      ]}
+    />
+
     <Slide.Split
       left={<img src={imgMountainSplit} alt="Mountain landscape" />}
       right={
