@@ -23,7 +23,7 @@
     }
   },
   "sideEffects": ["dist/index.css"],
-  "files": ["dist", "LICENSE"],
+  "files": ["dist", "LICENSE", "CHANGELOG.md"],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly --outDir dist && cp src/styles/fonts/LICENSE-*.txt dist/",
     "dev": "vite build --watch"
