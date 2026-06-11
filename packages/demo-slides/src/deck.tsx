@@ -1,4 +1,4 @@
-import { Code, Deck, Footnote, List, Notes, Slide } from "@danielbiegler/react-slides"
+import { Code, Deck, Footnote, List, Notes, Slide, Video } from "@danielbiegler/react-slides"
 import imgMountainSplit from "../assets/pietro-de-grandi-Q5dMq3cKqec-unsplash.jpg"
 import imgMountainShowcase from "../assets/simon-twukN12EN7c-unsplash.jpg"
 
@@ -351,6 +351,33 @@ export default (
         <a href="https://unsplash.com/de/fotos/landschaftsfotografie-von-bergen-twukN12EN7c" target="_blank" rel="noreferrer">Unsplash</a>
       </Footnote>
     </Slide.Showcase>
+
+    <Slide.Video
+      src="./assets/demo.mp4"
+      title="Full-bleed video"
+      description="Autoplays muted. Optional title and description overlay with gradient scrim."
+      loop
+    >
+      <Footnote>
+        Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>
+      </Footnote>
+    </Slide.Video>
+
+    <Slide.Split
+      left={<>
+        <Video src="./assets/demo.mp4" loop />
+        <Footnote>
+          Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>
+        </Footnote>
+      </>}
+      right={
+        <>
+          <h2>Video helper</h2>
+          <p>Drop <code>{"<Video>"}</code> into any layout pane just like <code>{"<Image>"}</code>.</p>
+        </>
+      }
+      mediaPane="left"
+    />
 
     <Slide.Centered>
       <h2>That&apos;s it.</h2>
