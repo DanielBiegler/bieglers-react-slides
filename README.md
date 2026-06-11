@@ -4,6 +4,10 @@ Portable, local presentations authored in TSX.
 
 Write slides as React components, navigate with arrow keys, and present from a self-contained folder that runs in any browser — no server required.
 
+## Demo
+
+- https://danielbiegler.github.io/bieglers-react-slides/
+
 ## Features
 
 - Seven layouts: Cover, CoverCentered, CoverSplit, Centered, Split, Showcase, Cards
