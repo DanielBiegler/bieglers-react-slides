@@ -1,4 +1,6 @@
 import { Code, Deck, Footnote, Notes, Slide } from "@danielbiegler/react-slides"
+import imgMountainSplit from "../assets/pietro-de-grandi-Q5dMq3cKqec-unsplash.jpg"
+import imgMountainShowcase from "../assets/simon-twukN12EN7c-unsplash.jpg"
 
 export default (
   <Deck title="react-slides demo" author="Daniel Biegler" date="2026" theme="auto" transition="slide">
@@ -120,7 +122,7 @@ export default (
     <Slide.Split
       left={
         <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+          src={imgMountainSplit}
           alt="Mountain landscape"
         />
       }
@@ -128,6 +130,11 @@ export default (
         <>
           <h2>Full-bleed image</h2>
           <p>The image fills its half edge-to-edge with <code>object-fit: cover</code>.</p>
+          <Footnote>
+            Photo: <a href="https://unsplash.com/de/@peter_mc_greats" target="_blank" rel="noreferrer">Pietro De Grandi</a>
+            {" / "}
+            <a href="https://unsplash.com/de/fotos/weisser-berg-in-der-nahe-eines-gewassers-Q5dMq3cKqec" target="_blank" rel="noreferrer">Unsplash</a>
+          </Footnote>
         </>
       }
       mediaPane="left"
@@ -250,16 +257,15 @@ export default (
     />
 
     <Slide.Showcase
-      src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2400"
-      alt="Sunlit mountain range above the clouds"
+      src={imgMountainShowcase}
+      alt="White mountain near a body of water"
       title="The image is the point"
       description="A full-bleed photo with an optional title and description over a gradient scrim."
     >
       <Footnote>
-        Photo: Qingbao Meng /{" "}
-        <a href="https://unsplash.com/photos/aerial-photography-of-mountain-ranges-jba6IjjuYP4" target="_blank" rel="noreferrer">
-          Unsplash
-        </a>
+        Photo: <a href="https://unsplash.com/de/@simon_berger" target="_blank" rel="noreferrer">simon</a>
+        {" / "}
+        <a href="https://unsplash.com/de/fotos/landschaftsfotografie-von-bergen-twukN12EN7c" target="_blank" rel="noreferrer">Unsplash</a>
       </Footnote>
     </Slide.Showcase>
 
