@@ -1,4 +1,5 @@
 import { Code, Deck, Footnote, List, Notes, Slide, Video } from "@danielbiegler/react-slides"
+import demoVideo from "../assets/demo.mp4"
 import imgMountainSplit from "../assets/pietro-de-grandi-Q5dMq3cKqec-unsplash.jpg"
 import imgMountainShowcase from "../assets/simon-twukN12EN7c-unsplash.jpg"
 
@@ -353,21 +354,23 @@ export default (
     </Slide.Showcase>
 
     <Slide.Video
-      src="./assets/demo.mp4"
+      src={demoVideo}
       title="Full-bleed video"
       description="Autoplays muted. Optional title and description overlay with gradient scrim."
       loop
     >
       <Footnote>
-        Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>
+        Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>.
+        Highly compressed on purpose to reduce repo size, locally you oughta use high definition videos.
       </Footnote>
     </Slide.Video>
 
     <Slide.Split
       left={<>
-        <Video src="./assets/demo.mp4" loop />
+        <Video src={demoVideo} loop />
         <Footnote>
-          Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>
+          Video from Pexels by <a href="https://www.pexels.com/video/scenic-aerial-view-of-pristine-forest-lake-34670189/" target="_blank" rel="noreferrer">Oskar Gross</a>.
+          Highly compressed on purpose to reduce repo size, locally you oughta use high definition videos.
         </Footnote>
       </>}
       right={
