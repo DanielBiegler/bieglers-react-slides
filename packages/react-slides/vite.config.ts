@@ -6,9 +6,13 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: {
+        index: resolve(__dirname, "src/index.ts"),
+        "vite-plugin": resolve(__dirname, "src/vite-plugin.ts"),
+      },
       formats: ["es"],
-      fileName: "index",
+      fileName: (_format, entryName) => `${entryName}.js`,
+      cssFileName: "index",
     },
     rollupOptions: {
       external: [
@@ -17,6 +21,7 @@ export default defineConfig({
         "react-router",
         "react/jsx-runtime",
         "prism-react-renderer",
+        "vite",
       ],
     },
   },

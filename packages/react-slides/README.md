@@ -13,6 +13,7 @@ Peer dependencies: `react`, `react-dom`, `react-router`
 ## Usage
 
 ```tsx
+import "@danielbiegler/react-slides/style.css"
 import { Deck, Slide, Code, Notes, Image, Video, List, Footnote } from "@danielbiegler/react-slides"
 
 export default (
@@ -57,6 +58,19 @@ export default (
 | `Code` | Syntax-highlighted code block with optional stepped highlights |
 | `Notes` | Speaker notes — visible only in Speaker View |
 | `Footnote` | Small footer note hoisted to the bottom of the slide |
+
+## Vite plugin
+
+`preloadPresentationAssets` injects `<link rel="preload">` tags for fonts, images, and videos at build time so assets are fetched before they're needed.
+
+```ts
+// vite.config.ts
+import { preloadPresentationAssets } from "@danielbiegler/react-slides/vite-plugin"
+
+export default defineConfig({
+  plugins: [react(), preloadPresentationAssets()],
+})
+```
 
 ## Features
 
