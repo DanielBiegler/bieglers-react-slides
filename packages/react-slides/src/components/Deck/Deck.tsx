@@ -254,6 +254,9 @@ function SlideShell({
       } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
         e.preventDefault()
         goPrevRef.current()
+      } else if (e.key === "f" || e.key === "F") {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen()
+        else document.exitFullscreen()
       }
     }
     window.addEventListener("keydown", onKey)
