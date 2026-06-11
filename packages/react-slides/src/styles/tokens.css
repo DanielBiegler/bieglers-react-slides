@@ -62,7 +62,7 @@ a:hover {
   --rs-font-serif: var(--rs-font-fraunces);
   --rs-font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 
-  --rs-font-size-base:  1.5rem;
+  --rs-font-size-base:  2rem;
   --rs-font-size-h1:    6rem;
   --rs-font-size-h2:    4rem;
   --rs-font-size-h3:    2.5rem;
