@@ -10,6 +10,9 @@ Purposefully Code-First and emphasis on Type-Safety, so that you can iterate wit
 
 - https://danielbiegler.github.io/bieglers-react-slides/
 
+> [!WARNING]
+> Slides are not supported on mobile devices. Use a desktop browser for the best experience.
+
 ## Features
 
 - Nine layouts: Cover, CoverCentered, CoverSplit, Centered, Split, Showcase, Video, Cards, List
