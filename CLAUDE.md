@@ -32,6 +32,10 @@ bun install
 - **Font cascade**: each layout's `.root` must declare `font-family: var(--rs-font-sans)`. CSS custom properties don't re-evaluate on already-inherited computed values, so overriding `--rs-font-sans` on a wrapper won't apply unless the root re-reads it.
 - **Library externals**: new runtime dependencies must be added to `rollupOptions.external` in `packages/react-slides/vite.config.ts`, or they get bundled into the published framework.
 
+## Workflow
+
+- **Update the changelog when done with a feature** — after completing any feature or notable fix, add an entry to `CHANGELOG.md` before considering the task done.
+
 ## Domain language
 
 See [`CONTEXT.md`](./CONTEXT.md) for the canonical glossary. Use its terms — if something conflicts with it, update the glossary first.
