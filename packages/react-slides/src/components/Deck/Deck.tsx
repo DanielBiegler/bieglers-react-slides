@@ -1,4 +1,5 @@
 import { Children, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from "react"
+import type { Overrides } from "../../overrides"
 import {
   HashRouter,
   Navigate,
@@ -18,13 +19,29 @@ import { SpeakerView } from "./SpeakerView"
 type Transition = "none" | "fade" | "slide"
 
 interface DeckProps {
+  /** Shown in the footer and in the browser tab title. */
   title: string
+  /** Shown in the footer alongside `date`, e.g. `"Jane Smith"`. */
   author?: string
+  /** Shown in the footer alongside `author`, e.g. `"2026"` or `"Q3 2026"`. */
   date?: string
+  /**
+   * Color scheme. `"auto"` (default) follows the OS preference via
+   * `prefers-color-scheme`. Pass `"dark"` or `"light"` to force a theme.
+   */
   theme?: "auto" | "dark" | "light"
+  /**
+   * Slide transition animation. Defaults to `"none"`.
+   * - `"fade"` — cross-fades between slides.
+   * - `"slide"` — slides in from the direction of navigation.
+   */
   transition?: Transition
+  /** CSS token overrides applied to all slides in the deck. Per-slide `overrides` take precedence via the CSS cascade. */
+  overrides?: Overrides
+  /** One or more slide elements — any valid React element works as a slide. */
   children: ReactElement | ReactElement[]
 }
+
 
 export const BROADCAST_CHANNEL = "react-slides"
 
@@ -304,6 +321,7 @@ function DeckRouter({
   slides,
   theme,
   transition,
+  overrides,
 }: {
   title: string
   author?: string
@@ -311,12 +329,13 @@ function DeckRouter({
   slides: ReactElement[]
   theme: "auto" | "dark" | "light"
   transition: Transition
+  overrides?: Overrides
 }) {
   const total = slides.length
   const { navigationReady, assetsLoaded } = useReadinessGate()
 
   return (
-    <div className={styles.root} data-theme={theme === "auto" ? undefined : theme}>
+    <div className={styles.root} data-theme={theme === "auto" ? undefined : theme} style={overrides as React.CSSProperties}>
       {!assetsLoaded && (
         <div className={styles.loadingIndicator} title="Loading fonts and images…" />
       )}
@@ -342,7 +361,28 @@ function DeckRouter({
   )
 }
 
-export function Deck({ title, author, date, theme = "auto", transition = "none", children }: DeckProps) {
+/**
+ * Root component for a presentation deck.
+ *
+ * Each direct child is treated as one slide. Wrap your slides in a single
+ * `<Deck>` and export it as the default export from your deck file.
+ *
+ * ```tsx
+ * export default (
+ *   <Deck title="My Talk" author="Jane Smith" date="2026" theme="auto" transition="slide">
+ *     <Slide.Cover title="Hello" subtitle="World" />
+ *     <Slide.Centered><h2>Slide two</h2></Slide.Centered>
+ *   </Deck>
+ * )
+ * ```
+ *
+ * Navigation:
+ * - `→` / `↓` / `Space` — next slide or next step
+ * - `←` / `↑` — previous slide or previous step
+ * - `F` — toggle fullscreen
+ * - Open `/#/speaker` in a second tab for speaker view (notes + timer + next-slide preview).
+ */
+export function Deck({ title, author, date, theme = "auto", transition = "none", overrides, children }: DeckProps) {
   const slides = Children.toArray(children) as ReactElement[]
   return (
     <HashRouter>
@@ -353,6 +393,7 @@ export function Deck({ title, author, date, theme = "auto", transition = "none",
         slides={slides}
         theme={theme}
         transition={transition}
+        overrides={overrides}
       />
     </HashRouter>
   )

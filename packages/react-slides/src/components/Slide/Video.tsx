@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import type { Overrides } from "../../overrides"
 import styles from "./Video.module.css"
 
 interface SlideVideoProps {
@@ -11,6 +12,7 @@ interface SlideVideoProps {
   poster?: string
   title?: string
   description?: string
+  overrides?: Overrides
   children?: ReactNode
 }
 
@@ -24,10 +26,11 @@ export function Video({
   poster,
   title,
   description,
+  overrides,
   children,
 }: SlideVideoProps) {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} style={overrides as React.CSSProperties}>
       <video
         className={styles.video}
         src={src}

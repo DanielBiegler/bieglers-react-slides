@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import type { Overrides } from "../../overrides"
 import styles from "./Showcase.module.css"
 
 interface ShowcaseProps {
@@ -10,13 +11,14 @@ interface ShowcaseProps {
   description?: string
   /** How the image fills the slide. Defaults to "cover" (full-bleed, may crop). */
   fit?: "cover" | "contain"
+  overrides?: Overrides
   /** Non-visual helpers such as <Footnote> or <Notes>. */
   children?: ReactNode
 }
 
-export function Showcase({ src, alt = "", title, description, fit = "cover", children }: ShowcaseProps) {
+export function Showcase({ src, alt = "", title, description, fit = "cover", overrides, children }: ShowcaseProps) {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} style={overrides as React.CSSProperties}>
       <img className={styles.image} src={src} alt={alt} style={{ objectFit: fit }} />
       {(title || description) && (
         <div className={styles.caption}>

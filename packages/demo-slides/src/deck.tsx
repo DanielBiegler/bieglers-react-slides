@@ -41,35 +41,68 @@ export default (
       }
     />
 
-    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-plus-jakarta)" } as React.CSSProperties}>
-      <Slide.Centered>
-        <h2>Plus Jakarta Sans</h2>
-        <p>The quick brown fox jumps over the lazy dog.</p>
-        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
-          --rs-font-sans: var(--rs-font-plus-jakarta)
-        </p>
-      </Slide.Centered>
-    </div>
+    <Slide.CoverSplit
+      title="Full-bleed image panel"
+      subtitle="No tint by default — raw photo fills the left half."
+      image={imgMountainSplit}
+    />
 
-    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-bricolage-grotesque)" } as React.CSSProperties}>
-      <Slide.Centered>
-        <h2>Bricolage Grotesque</h2>
-        <p>The quick brown fox jumps over the lazy dog.</p>
-        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
-          --rs-font-sans: var(--rs-font-bricolage-grotesque)
-        </p>
-      </Slide.Centered>
-    </div>
+    <Slide.CoverSplit
+      title="With accent tint"
+      subtitle="imageFilter={true} overlays the accent color via mix-blend-mode."
+      image={imgMountainSplit}
+      imageFilter
+    />
 
-    <div style={{ width: "100%", height: "100%", "--rs-font-sans": "var(--rs-font-unbounded)" } as React.CSSProperties}>
-      <Slide.Centered>
-        <h2>Unbounded</h2>
-        <p>The quick brown fox jumps over the lazy dog.</p>
-        <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
-          --rs-font-sans: var(--rs-font-unbounded)
-        </p>
-      </Slide.Centered>
-    </div>
+    <Slide.CoverSplit
+      title="Multiple icons"
+      subtitle="Icons now sit side-by-side with a flex gap."
+      icon={
+        <>
+          <svg width={"1em"} height={"1em"} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+          <svg width={"1em"} height={"1em"} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+          </svg>
+          <svg width={"1em"} height={"1em"} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </>
+      }
+    />
+
+    <Slide.Centered overrides={{ "--rs-font-sans": "var(--rs-font-plus-jakarta)" }}>
+      <h2>Plus Jakarta Sans</h2>
+      <p>The quick brown fox jumps over the lazy dog.</p>
+      <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+        {'overrides={{ "--rs-font-sans": "var(--rs-font-plus-jakarta)" }}'}
+      </p>
+    </Slide.Centered>
+
+    <Slide.Centered overrides={{ "--rs-font-sans": "var(--rs-font-bricolage-grotesque)" }}>
+      <h2>Bricolage Grotesque</h2>
+      <p>The quick brown fox jumps over the lazy dog.</p>
+      <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+        {'overrides={{ "--rs-font-sans": "var(--rs-font-bricolage-grotesque)" }}'}
+      </p>
+    </Slide.Centered>
+
+    <Slide.Centered overrides={{ "--rs-font-sans": "var(--rs-font-unbounded)", }}>
+      <h2>Unbounded</h2>
+      <p>The quick brown fox jumps over the lazy dog.</p>
+      <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+        {'overrides={{ "--rs-font-sans": "var(--rs-font-unbounded)" }}'}
+      </p>
+    </Slide.Centered>
+
+    <Slide.Centered overrides={{ "--rs-font-heading": "var(--rs-font-unbounded)" }}>
+      <h2>Mixed typography</h2>
+      <p>Headings in Unbounded, body text in Inter.</p>
+      <p style={{ color: "var(--rs-color-muted)", fontSize: "var(--rs-font-size-small)", fontFamily: "var(--rs-font-mono)" }}>
+        {'overrides={{ "--rs-font-heading": "var(--rs-font-unbounded)" }}'}
+      </p>
+    </Slide.Centered>
 
     <Slide.Centered>
       <h2>Simple by default</h2>

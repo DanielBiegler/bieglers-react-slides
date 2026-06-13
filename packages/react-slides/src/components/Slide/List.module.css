@@ -12,6 +12,7 @@
 }
 
 .heading {
+  font-family: var(--rs-font-heading, var(--rs-font-sans));
   font-size: var(--rs-font-size-h2);
   font-weight: var(--rs-font-weight-heading);
   color: var(--rs-color);

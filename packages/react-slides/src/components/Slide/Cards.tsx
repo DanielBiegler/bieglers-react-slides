@@ -1,6 +1,7 @@
 import { ReactNode, useContext, useLayoutEffect } from "react"
 import { DeckContext } from "../../context/DeckContext"
 import { StepsContext } from "../../context/StepsContext"
+import type { Overrides } from "../../overrides"
 import styles from "./Cards.module.css"
 
 type BorderSide = "left" | "top" | "right" | "bottom"
@@ -24,11 +25,12 @@ interface CardsProps {
   border?: BorderSide
   /** Reveal cards one by one as the presenter advances. Step 0 = title only. */
   reveal?: boolean
+  overrides?: Overrides
   /** Non-visual helpers such as <Footnote> or <Notes>. */
   children?: ReactNode
 }
 
-export function Cards({ cards, title, border = "top", reveal, children }: CardsProps) {
+export function Cards({ cards, title, border = "top", reveal, overrides, children }: CardsProps) {
   const register = useContext(StepsContext)
   const { step } = useContext(DeckContext)
 
@@ -41,7 +43,7 @@ export function Cards({ cards, title, border = "top", reveal, children }: CardsP
   }, [reveal, visible.length, register])
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} style={overrides as React.CSSProperties}>
       {title && <h2 className={styles.heading}>{title}</h2>}
       <div className={styles.grid} data-count={visible.length}>
         {visible.map((card, i) => {

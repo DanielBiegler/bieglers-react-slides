@@ -1,4 +1,5 @@
 export { Deck } from "./components/Deck/Deck"
+export type { Overrides } from "./overrides"
 export { Slide } from "./components/Slide/index"
 export type { CardItem } from "./components/Slide/Cards"
 export { List } from "./components/List/List"

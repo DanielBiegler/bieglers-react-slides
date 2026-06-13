@@ -37,6 +37,7 @@
 }
 
 .title {
+  font-family: var(--rs-font-heading, var(--rs-font-sans));
   font-size: var(--rs-font-size-h1);
   font-weight: var(--rs-font-weight-heading);
   line-height: 1.05;
