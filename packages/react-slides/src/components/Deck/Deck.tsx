@@ -303,9 +303,9 @@ function SlideShell({
           />
         </div>
         <footer className={styles.footer}>
-          <span>{title}</span>
+          <span>{author}</span>
           <span className={styles.footerCenter}>
-            {[author, date].filter(Boolean).join(" · ")}
+            {[title, date].filter(Boolean).join(" · ")}
           </span>
           <span className={styles.footerRight}>{slideIndex + 1} / {total}</span>
         </footer>

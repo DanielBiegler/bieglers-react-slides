@@ -37,8 +37,8 @@
   max-width: 60%;
   font-size: var(--rs-font-size-small);
   line-height: 1.35;
-  color: var(--rs-color-muted);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.65);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
   /* selectable so the citation can be copied; only this element is interactive,
      so it doesn't interfere with slide navigation */
   pointer-events: auto;
@@ -96,10 +96,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   font-size: var(--rs-font-size-small);
-  color: var(--rs-color-muted);
-  font-family: var(--rs-font-mono);
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--rs-font-sans);
   pointer-events: none;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
 
 .footerCenter {
@@ -108,6 +108,7 @@
 
 .footerRight {
   text-align: right;
+  font-family: var(--rs-font-mono);
 }
 
 .loadingIndicator {

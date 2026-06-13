@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-06-13
+
+### Changed
+- **Deck footer — improved readability**: footer text is now `rgba(255,255,255,0.65)` with a stronger drop shadow (`0 1px 6px rgba(0,0,0,0.7)`), replacing the muted token color that was near-invisible on accent-colored slide panels (e.g. `Slide.CoverSplit`).
+- **Deck footer — font**: footer labels (title, author, date) now use `--rs-font-sans`; the slide index retains `--rs-font-mono` to prevent layout shift during navigation.
+- **Deck footer — field order**: author is now bottom-left; title and date are center.
+- **`Footnote` — improved readability**: matches the new footer text style (`rgba(255,255,255,0.65)` + stronger shadow).
+
 ## [0.2.0] - 2026-06-13
 
 ### Added

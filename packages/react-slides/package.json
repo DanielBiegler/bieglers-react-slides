@@ -1,6 +1,6 @@
 {
   "name": "@danielbiegler/react-slides",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Framework for building beautiful, portable, local presentations in TSX",
   "keywords": ["react", "presentations", "slides", "typescript", "vite"],
   "author": "Daniel Biegler",
